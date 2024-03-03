@@ -1,0 +1,236 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f2f2f2;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+
+            #garden-selector {
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                max-width: 800px;
+                width: 100%;
+                text-align: left;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+
+            .column {
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+
+            .column-title {
+                font-weight: bold;
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 10px;
+                font-size: 14px;
+            }
+
+            input[type="checkbox"] {
+                margin-right: 8px;
+            }
+
+            button {
+                background-color: #4caf50;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+        </style>
+        <script>
+            function submitFirstPageSelection() {
+                const selectedPlants = document.querySelectorAll('input[type="checkbox"]:checked');
+                const selectedPlantNames = Array.from(selectedPlants).map(checkbox => checkbox.value);
+
+                alert(`Selected Plants: ${selectedPlantNames.join(', ')}`);
+            }
+        </script>
+        <script>
+            function submitFirstPageSelection() {
+                const selectedPlants = document.querySelectorAll('input[type="checkbox"]:checked');
+                const selectedPlantNames = Array.from(selectedPlants).map(checkbox => checkbox.value);
+
+                // Store selected data in localStorage
+            localStorage.setItem('selectedPlants', JSON.stringify(selectedPlantNames));
+
+            // Redirect to the second webpage
+            window.location.href = 'second_page.html'; // Replace 'second_webpage.html' with the actual filename of your second webpage
+
+
+                alert(`Selected Plants: ${selectedPlantNames.join(', ')}`);
+
+                function submitSelection() {
+            const selectedPlants = document.querySelectorAll('input[type="checkbox"]:checked');
+            const selectedCategories = new Set();   
+
+            selectedPlants.forEach(checkbox => {
+                const category = checkbox.closest('.column').querySelector('.column-title').textContent.trim();
+                selectedCategories.add(category);
+            });
+
+            populateCategoryDropdown(Array.from(selectedCategories));
+        }
+
+        function populateCategoryDropdown(categories) {
+            const categorySelect = document.getElementById("categorySelect");
+            categorySelect.innerHTML = '<option value="">Select Category</option>';
+
+            categories.forEach(category => {
+                const option = document.createElement("option");
+                option.value = category;
+                option.text = category;
+                categorySelect.add(option);
+            });
+        }
+            }
+        </script>
+    </head>
+    <body>
+
+    <!-- This is the code for Vegetable Selector -->
+    <div id="garden-selector">
+        <div class="column">
+            <div class="column-title">Vegetables</div>
+            <label><input type="checkbox" value="Artichoke"> Artichoke</label>
+            <label><input type="checkbox" value="Arugula"> Arugula</label>
+            <label><input type="checkbox" value="Asparagus"> Asparagus</label>
+            <label><input type="checkbox" value="Bean"> Bean</label>
+            <label><input type="checkbox" value="Beet"> Beet</label>
+            <label><input type="checkbox" value="Bell Pepper"> Bell Pepper</label>
+            <label><input type="checkbox" value="Borage"> Borage</label>
+            <label><input type="checkbox" value="Broccoli"> Broccoli</label>
+            <label><input type="checkbox" value="Brussel Sprout"> Brussel Sprout</label>
+            <label><input type="checkbox" value="Cabbage"> Cabbage</label>
+            <label><input type="checkbox" value="Carrot"> Carrot</label>
+            <label><input type="checkbox" value="Cauliflower"> Cauliflower</label>
+            <label><input type="checkbox" value="Celeriac"> Celeriac</label>
+            <label><input type="checkbox" value="Celery"> Celery</label>
+            <label><input type="checkbox" value="Chili Pepper"> Chili Pepper</label>
+            <label><input type="checkbox" value="Chives"> Chives</label>
+            <label><input type="checkbox" value="Collard Greens "> Collard Greens </label>
+            <label><input type="checkbox" value="Corn"> Corn</label>
+            <label><input type="checkbox" value="Cucumber"> Cucumber</label>
+            <label><input type="checkbox" value="Eggplant"> Eggplant</label>
+            <label><input type="checkbox" value="Garlic"> Garlic</label>
+            <label><input type="checkbox" value="Kale"> Kale</label>
+            <label><input type="checkbox" value="Kohlrabi"> Kohlrabi</label>
+            <label><input type="checkbox" value="Leek"> Leek</label>
+            <label><input type="checkbox" value="Lettuce"> Lettuce</label>
+            <label><input type="checkbox" value="Mustard Greens"> Mustard Greens</label>
+            <label><input type="checkbox" value="Okra"> Okra</label>
+            <label><input type="checkbox" value="Onion"> Onion</label>
+            <label><input type="checkbox" value="Parsnip"> Parsnip</label>
+            <label><input type="checkbox" value="Peas"> Peas</label>
+            <label><input type="checkbox" value="Potato"> Potato</label>
+            <label><input type="checkbox" value="Radish"> Radish</label>
+            <label><input type="checkbox" value="Rutabaga"> Rutabaga</label>
+            <label><input type="checkbox" value="Spinach"> Spinach</label>
+            <label><input type="checkbox" value="Summer Squash"> Summer Squash</label>
+            <label><input type="checkbox" value="Sweet Potato"> Sweet Potato</label>
+            <label><input type="checkbox" value="Swiss Chard"> Swiss Chard</label>
+            <label><input type="checkbox" value="Tomato"> Tomato</label>
+            <label><input type="checkbox" value="Turnip"> Turnip</label>
+            <label><input type="checkbox" value="Winter Squash"> Winter Squash</label>
+            <label><input type="checkbox" value="Zucchini"> Zucchini</label>
+        </div>
+        <div class="column">
+            <div class="column-title">Herbs</div>
+            <label><input type="checkbox" value="Anise Hyssop"> Anise Hyssop</label>
+            <label><input type="checkbox" value="Basil"> Basil</label>
+            <label><input type="checkbox" value="Bay Leaf"> Bay Leaf</label>
+            <label><input type="checkbox" value="Bee Balm"> Bee Balm</label>
+            <label><input type="checkbox" value="Chamomile"> Chamomile</label>
+            <label><input type="checkbox" value="Chervil"> Chervil</label>
+            <label><input type="checkbox" value="Cilantro"> Cilantro</label>
+            <label><input type="checkbox" value="Cress"> Cress</label>
+            <label><input type="checkbox" value="Cumin"> Cumin</label>
+            <label><input type="checkbox" value="Dill"> Dill</label>
+            <label><input type="checkbox" value="Epazote"> Epazote</label>
+            <label><input type="checkbox" value="Lavender"> Lavender</label>
+            <label><input type="checkbox" value="Lemon Balm"> Lemon Balm</label>
+            <label><input type="checkbox" value="Lemongrass"> Lemongrass</label>
+            <label><input type="checkbox" value="Lavender"> Lavender</label>
+            <label><input type="checkbox" value="Lovage"> Lovage</label>
+            <label><input type="checkbox" value="Marjoram"> Marjoram</label>
+            <label><input type="checkbox" value="Mint"> Mint</label>
+            <label><input type="checkbox" value="Nasturtium"> Nasturtium</label>
+            <label><input type="checkbox" value="Oregano"> Oregano</label>
+            <label><input type="checkbox" value="Papalo"> Papalo</label>
+            <label><input type="checkbox" value="Parsley"> Parsley</label>
+            <label><input type="checkbox" value="Rosemary"> Rosemary</label>
+            <label><input type="checkbox" value="Sage"> Sage</label>
+            <label><input type="checkbox" value="Savory"> Savory</label>
+            <label><input type="checkbox" value="Shiso"> Shiso</label>
+            <label><input type="checkbox" value="Sorrel"> Sorrel</label>
+            <label><input type="checkbox" value="Stevia"> Stevia</label>
+            <label><input type="checkbox" value="Tarragon"> Tarragon</label>
+            <label><input type="checkbox" value="Thyme"> Thyme</label>
+        </div>
+        <div class="column">
+            <div class="column-title">Fruits</div>
+            <label><input type="checkbox" value="Apple Tree"> Apple Tree</label>
+            <label><input type="checkbox" value="Apricot Tree"> Apricot Tree</label>
+            <label><input type="checkbox" value="Blackberry"> Blackberry</label>
+            <label><input type="checkbox" value="Blueberry"> Blueberry</label>
+            <label><input type="checkbox" value="Cantaloupe"> Cantaloupe</label>
+            <label><input type="checkbox" value="Cherry Tree"> Cherry Tree</label>
+            <label><input type="checkbox" value="Currant"> Currant</label>
+            <label><input type="checkbox" value="Elderberry"> Elderberry</label>
+            <label><input type="checkbox" value="Fig Tree"> Fig Tree</label>
+            <label><input type="checkbox" value="Gooseberry"> Gooseberry</label>
+            <label><input type="checkbox" value="Grape"> Grape</label>
+            <label><input type="checkbox" value="Honeydew"> Honeydew</label>
+            <label><input type="checkbox" value="Kiwi (Hardy)"> Kiwi (Hardy)</label>
+            <label><input type="checkbox" value="Medlar Tree"> Medlar Tree</label>
+            <label><input type="checkbox" value="Mulberry Tree"> Mulberry Tree</label>
+            <label><input type="checkbox" value="Nectarine Tree"> Nectarine Tree</label>
+            <label><input type="checkbox" value="Pawpaw Tree"> Pawpaw Tree</label>
+            <label><input type="checkbox" value="Peach Tree"> Peach Tree</label>
+            <label><input type="checkbox" value="Pear Tree"> Pear Tree</label>
+            <label><input type="checkbox" value="Persimmon Tree"> Persimmon Tree</label>
+            <label><input type="checkbox" value="Plum Tree"> Plum Tree</label>
+            <label><input type="checkbox" value="Pumpkin"> Pumpkin</label>
+            <label><input type="checkbox" value="Quince Tree"> Quince Tree</label>
+            <label><input type="checkbox" value="Raspberry"> Raspberry</label>
+            <label><input type="checkbox" value="Rhubarb"> Rhubarb</label>
+            <label><input type="checkbox" value="Seaberry"> Seaberry</label>
+            <label><input type="checkbox" value="Serviceberry"> Serviceberry</label>
+            <label><input type="checkbox" value="Strawberry"> Strawberry</label>
+            <label><input type="checkbox" value="Watermelon"> Lemon</label>
+        </div>
+
+        <button onclick="submitFirstPageSelection()">Submit</button>
+    </div>
+
+    </body>
+    </html>
+

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Cart</title>
+  <style>
+    /* Add some basic styles for better presentation */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .total {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .item-controls {
+      display: flex;
+      flex-direction: column;
+    }
+    .item-select-container {
+      display: flex;
+      margin-bottom: 10px;
+    }
+    .item-select {
+      margin-right: 10px;
+    }
+    .item-quantity {
+      width: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Checkout Cart</h1>
+
+  <table id="cart">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Cart items will be dynamically added here -->
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" class="total">Total:</td>
+        <td id="cart-total">0.00</td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <!-- This is where to update the Selectable Items -->
+  <h2>Add Items</h2>
+  <div class="item-controls">
+    <div class="item-select-container">
+      <label for="item-select">Select Item:</label>
+      <select id="item-select" class="item-select">
+        <option value="Apple">Apple</option>
+        <option value="Orange">Orange</option>
+        <option value="Carrot">Carrot</option>
+        <option value="Asparagus">Asparagus</option>
+      </select>
+      <label for="item-quantity">Quantity:</label>
+      <input type="number" id="item-quantity" class="item-quantity" value="0" min="0">
+    </div>
+
+    <!-- Additional drop-downs with quantity inputs -->
+    <div class="item-select-container">
+      <label for="item-select-2">Select Item 2:</label>
+      <select id="item-select-2" class="item-select">
+        <option value="Grape">Grape</option>
+        <option value="Kiwi">Kiwi</option>
+      </select>
+      <label for="item-quantity-2">Quantity:</label>
+      <input type="number" id="item-quantity-2" class="item-quantity" value="0" min="0">
+    </div>
+
+    <div class="item-select-container">
+      <label for="item-select-3">Select Item 3:</label>
+      <select id="item-select-3" class="item-select">
+        <option value="Parsley">Parsley</option>
+      </select>
+      <label for="item-quantity-3">Quantity:</label>
+      <input type="number" id="item-quantity-3" class="item-quantity" value="0" min="0">
+    </div>
+
+    <button onclick="addItem()">Add to Cart</button>
+    <button onclick="resetCart()">Reset Cart</button>
+    <button onclick="buyNow()">Buy Now</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load cart data from localStorage or use an empty array if not present
+      const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+      // Function to render the cart
+      function renderCart() {
+        const cartBody = document.querySelector('#cart tbody');
+        const totalElement = document.getElementById('cart-total');
+        let total = 0;
+
+        // Clear the current cart content
+        cartBody.innerHTML = '';
+
+        // Iterate through cart items
+        cartItems.forEach(item => {
+          const row = cartBody.insertRow();
+          row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.price.toFixed(2)}</td>
+            <td><input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${item.id}, this.value)"></td>
+            <td>${(item.price * (item.quantity || 0)).toFixed(2)}</td>
+            <td><button onclick="removeItem(${item.id})">Remove</button></td>
+          `;
+          total += item.price * (item.quantity || 0);
+        });
+
+        // Update the total
+        totalElement.textContent = total.toFixed(2);
+
+        // Store the cart items in localStorage
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      }
+
+      // Function to remove an item from the cart
+      window.removeItem = function(itemId) {
+        const index = cartItems.findIndex(item => item.id === itemId);
+        if (index !== -1) {
+          cartItems.splice(index, 1);
+          renderCart();
+        }
+      };
+
+      // Function to update the quantity of an item in the cart
+      window.updateQuantity = function(itemId, newQuantity) {
+        const index = cartItems.findIndex(item => item.id === itemId);
+        if (index !== -1) {
+          cartItems[index].quantity = parseInt(newQuantity, 10);
+          renderCart();
+        }
+      };
+
+      // Function to reset only the quantities in the cart
+      window.resetCart = function() {
+        // Set the quantity of each item in the cart to zero
+        cartItems.forEach(item => {
+          item.quantity = 0;
+        });
+
+        // Set the quantity inputs for "Add Items" section to zero
+        document.getElementById('item-quantity').value = '0';
+        document.getElementById('item-quantity-2').value = '0';
+        document.getElementById('item-quantity-3').value = '0';
+
+        renderCart();
+      };
+
+      // Function to add a new item to the cart
+      window.addItem = function() {
+        const itemName = document.getElementById('item-select').value ||
+          document.getElementById('item-select-2').value ||
+          document.getElementById('item-select-3').value;
+
+        const itemQuantity = parseInt(document.getElementById('item-quantity').value, 10) ||
+          parseInt(document.getElementById('item-quantity-2').value, 10) ||
+          parseInt(document.getElementById('item-quantity-3').value, 10);
+
+        // Handle NaN values and set them to 0
+        const quantity = isNaN(itemQuantity) ? 0 : itemQuantity;
+
+        if (itemName && quantity > 0) {
+          // Check if the item already exists in the cart
+          const existingItem = cartItems.find(item => item.name === itemName);
+
+          if (existingItem) {
+            // If the item exists, update the quantity
+            existingItem.quantity += quantity;
+          } else {
+            // If the item doesn't exist, add it to the cart
+            const selectedItems = {
+              'Apple': 3.00,
+              'Orange': 2.00,
+              'Carrot': 4.00,
+              'Asparagus': 5.00,
+              'Grape': 6.00,
+              'Kiwi': 7.00,
+              'Parsley': 8.00,
+            };
+
+            const itemPrice = selectedItems[itemName];
+
+            const newItem = {
+              id: cartItems.length + 1,
+              name: itemName,
+              price: itemPrice,
+              quantity: quantity,
+            };
+
+            cartItems.push(newItem);
+          }
+
+          renderCart();
+
+          // Clear input fields after adding an item
+          document.getElementById('item-quantity').value = '0';
+          document.getElementById('item-quantity-2').value = '0';
+          document.getElementById('item-quantity-3').value = '0';
+        } else {
+          alert('Please enter valid item details.');
+        }
+      };
+
+      // Function to redirect to the payment page when "Buy Now" is clicked
+      window.buyNow = function() {
+        // Redirect to the payment page
+        window.location.href = 'PaymentPage.html';
+      };
+
+      // Initial render
+      renderCart();
+    });
+  </script>
+
+</body>
+</html>
+
+
+

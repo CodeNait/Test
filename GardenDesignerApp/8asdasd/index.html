@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gardening Grid</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grid-container" id="gridContainer"></div>
+  <div id="selectedVegetables"></div> <!-- New area for selected vegetables -->
+  <button id="resetButton">Reset</button>
+  <div class="plant-options">
+    <div class="plant-option" data-plant="Carrot">
+      <input type="checkbox" class="plant-checkbox" id="carrotCheckbox">
+      <label for="carrotCheckbox">Carrot</label>
+    </div>
+    <!-- Add other plant options similarly -->
+  </div>
+  <button id="plantButton">Plant these plants</button> <!-- Button to move selected vegetables -->
+  <div id="plantedVegetables"></div> <!-- New container for planted vegetables -->
+  <script src="script.js"></script>
+</body>
+</html>

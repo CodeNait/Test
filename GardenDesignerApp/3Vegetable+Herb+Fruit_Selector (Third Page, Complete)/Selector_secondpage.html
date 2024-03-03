@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #garden-selector {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 600px;
+            text-align: left;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .column-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Retrieve selected data from localStorage
+        const storedData = localStorage.getItem('selectedPlants');
+
+        if (storedData) {
+            const selectedPlants = JSON.parse(storedData);
+            console.log('Stored Selected Plants:', selectedPlants);
+
+            // Here, you can use the selectedPlants array as needed on this page
+            // For example, you might want to dynamically check the checkboxes based on the stored data
+            selectedPlants.forEach(plant => {
+                const checkbox = document.querySelector(`input[value="${plant}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+        }
+    });
+</script>
+
+    
+</head>
+<body>
+
+
+</body>
+</html>
+

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Companion Gardening App</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    #main-square {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 2px solid #333;
+    }
+
+    .sub-square {
+      position: absolute;
+      width: 48%;
+      height: 48%;
+      border: 1px solid #666;
+    }
+
+    #sub-1 { top: 0; left: 0; }
+    #sub-2 { top: 0; right: 0; }
+    #sub-3 { bottom: 0; left: 0; }
+    #sub-4 { bottom: 0; right: 0; }
+
+    .sub-square p {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: #fff;
+      border: 1px solid #666;
+      display: none;
+    }
+
+    .dropdown-select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div id="main-square">
+    <!-- Grid 1 -->
+    <div id="sub-1" class="sub-square">
+      <p id="title-1" onclick="toggleDropdown(1)">Select Plant</p>
+      <div id="dropdown-1" class="dropdown">
+        <select class="dropdown-select" onchange="plantSelected(1, this)">
+          <option value="" selected disabled>Select Plant</option>
+          <option value="basil">Basil</option>
+          <option value="carrot">Carrot</option>
+          <option value="tomato">Tomato</option>
+          <option value="corn">Corn</option>
+        </select>
+      </div>
+    </div>
+    <!-- Grid 2 -->
+    <div id="sub-2" class="sub-square">
+      <p id="title-2" onclick="toggleDropdown(2)">Select 2nd Plant</p>
+      <div id="dropdown-2" class="dropdown">
+        <select class="dropdown-select" onchange="plantSelected(2, this)">
+          <option value="" selected disabled>Select 2nd Plant</option>
+          <option value="basil">Basil</option>
+          <option value="carrot">Carrot</option>
+          <option value="tomato">Tomato</option>
+          <option value="corn">Corn</option>
+        </select>
+      </div>
+    </div>
+    <!-- Grid 3 -->
+    <div id="sub-3" class="sub-square">
+      <p id="title-3" onclick="toggleDropdown(3)">Select 3rd Plant</p>
+      <div id="dropdown-3" class="dropdown">
+        <select class="dropdown-select" onchange="plantSelected(3, this)">
+          <option value="" selected disabled>Select 3rd Plant</option>
+          <option value="basil">Basil</option>
+          <option value="carrot">Carrot</option>
+          <option value="tomato">Tomato</option>
+          <option value="corn">Corn</option>
+        </select>
+      </div>
+    </div>
+    <!-- Grid 4 -->
+    <div id="sub-4" class="sub-square">
+      <p id="title-4" onclick="toggleDropdown(4)">Select 4th Plant</p>
+      <div id="dropdown-4" class="dropdown">
+        <select class="dropdown-select" onchange="plantSelected(4, this)">
+          <option value="" selected disabled>Select 4th Plant</option>
+          <option value="basil">Basil</option>
+          <option value="carrot">Carrot</option>
+          <option value="tomato">Tomato</option>
+          <option value="corn">Corn</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+ <script>
+  function toggleDropdown(gridNumber) {
+    var dropdown = document.getElementById("dropdown-" + gridNumber);
+    dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    if (dropdown.style.display === "none") {
+      // If dropdown is hidden, reset the title to "Select Plant"
+      document.getElementById("title-" + gridNumber).textContent = "Select Plant";
+    }
+    updateCompanionBoxes(gridNumber);
+  }
+
+  function plantSelected(gridNumber, selectElement) {
+    var selectedPlant = selectElement.value;
+    var titleElement = document.getElementById("title-" + gridNumber);
+    titleElement.textContent = (selectedPlant !== "") ? selectedPlant : "Select Plant";
+    // Hide the dropdown after selection
+    document.getElementById("dropdown-" + gridNumber).style.display = "none";
+    updateCompanionBoxes(gridNumber);
+
+    // Check conditions for grid 1 selection
+    if (gridNumber === 1) {
+      // If "Tomatoes" is selected in grid 1, disable "Carrot" in grid 2 and grid 3
+      var carrotOption = document.getElementById("dropdown-2").querySelector('option[value="carrot"]');
+      var tomatoOption = document.getElementById("dropdown-1").querySelector('option[value="tomato"]');
+      var grid3CarrotOption = document.getElementById("dropdown-3").querySelector('option[value="carrot"]');
+
+      if (selectedPlant === "tomato") {
+        carrotOption.disabled = true;
+        grid3CarrotOption.disabled = true;
+      } else {
+        // Enable the options if a different plant is selected in grid 1
+        carrotOption.disabled = false;
+        grid3CarrotOption.disabled = false;
+      }
+    }
+  }
+
+  function updateCompanionBoxes(gridNumber) {
+    var selectedPlant = document.getElementById("dropdown-" + gridNumber).querySelector("select").value;
+
+    // Reset styles for all boxes
+    for (var i = 2; i <= 3; i++) {
+      document.getElementById("sub-" + i).style.backgroundColor = '';
+    }
+
+    // Apply specific styles based on selected plant (Cucumber)
+    if (selectedPlant === "cucumber") {
+      document.getElementById("sub-2").style.backgroundColor = 'lightgreen';
+      document.getElementById("sub-3").style.backgroundColor = 'lightgreen';
+    }
+  }
+
+  // Event handlers for grid 1
+  document.getElementById("title-1").onclick = function() {
+    toggleDropdown(1);
+  };
+  document.getElementById("dropdown-1").querySelector("select").onchange = function() {
+    plantSelected(1, this);
+  };
+
+  // Event handlers for grid 2
+  document.getElementById("title-2").onclick = function() {
+    toggleDropdown(2);
+  };
+  document.getElementById("dropdown-2").querySelector("select").onchange = function() {
+    plantSelected(2, this);
+  };
+
+  // Event handlers for grid 3
+  document.getElementById("title-3").onclick = function() {
+    toggleDropdown(3);
+  };
+  document.getElementById("dropdown-3").querySelector("select").onchange = function() {
+    plantSelected(3, this);
+  };
+
+  // Event handlers for grid 4
+  document.getElementById("title-4").onclick = function() {
+    toggleDropdown(4);
+  };
+  document.getElementById("dropdown-4").querySelector("select").onchange = function() {
+    plantSelected(4, this);
+  };
+</script>
+</body>
+</html>

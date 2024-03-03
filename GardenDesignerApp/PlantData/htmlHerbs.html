@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Landing Page</title>
+</head>
+<body>
+    <div id="content"></div>
+
+    <script type="text/javascript">
+        const items = [
+             { name: 'Anise Hyssop', type: "Herb", companion: ['Bee Balm', 'Echinacca', 'Lavender', 'Assters', 'Oregano','Agastache', 'Coreopsis', 'Marigold','Calendula', 'Nasturtium', 'Dill','Chamomile' ], enemy: ['Mint', 'Tomatoes', 'Fern', 'Hostas', 'Blueberries' ] },
+             { name: 'Basil', type: "Herb", companion: ['Tomatoes', 'Oregano', 'Thyme', 'Marigolds', 'Nasturtium','Chamomile', 'Borage', 'Beans','Lettuce', 'Carrots', 'Radishes','Cucumbers', 'Spinach' ], enemy: ['Fennel', 'Cabbage', 'Anise', 'Rue', 'Sage', 'Mint','Rosemary', 'Cilantro' ] },
+             { name: 'Bay Leaf', type: "Herb", companion: ['Rosemary', 'Thyme', 'Sage', 'Oregano', 'Lavender','Marjoram', 'Lemon Balm', 'Chives','Parsley', 'Dill', 'Chamomile','Beans' ], enemy: ['Trees', 'Potatoes' ] },
+             { name: 'Bee Balm', type: "Herb", companion: ['Lavender', 'Echinacea', 'Agastache', 'Phlox', 'Rudbeckia','Asters', 'Monkshood', 'Chives','Marigolds', 'Calendula', 'Cosmos','Dill' ], enemy: ['Mint', 'Fennel', 'Basil', 'Oregano', 'Lemon Balm', 'Chrysanthemums' ] },
+             { name: 'Bronze Fennel', type: "Herb", companion: ['Dill', 'Lavender', 'Chamomile', 'Borage', 'Cilantro','Roses', 'Sage', 'Thyme','Marigolds', 'Calendula', 'Nasturtium','Chives'], enemy: ['Other Fennel Types', 'Celery', 'Cauliflower', 'Cabbage', 'Kale', 'Garden Cress','Bok Choy', 'Broccoli', 'Brussel Sprouts','Mustard Plant', 'Lettuce', 'Carrots' ] },
+             { name: 'Chamomile', type: "Herb", companion: ['Cauliflower', 'Cabbage', 'Kale', 'Garden Cress', 'Bok Choy','Broccoli', 'Brussel Sprouts', 'Onion','Garlic', 'Mint', 'Cucumber','Basil', 'Oregano', 'Thyme','Lavender', 'Marigolds', 'Nasturtium', 'Dill' , 'Calendula' ], enemy: ['Chrysanthemums', 'Fennel', 'Sunflowers', 'Black Walnut Tree', 'Lily of the Valley', 'Boxwood' ] },
+             { name: 'Chervil', type: "Herb", companion: ['Lettuce', 'Rashishes', 'Carrots', 'Cilantro', 'Dill','Chives', 'Basil', 'Marigolds','Calendula', 'Nasturtium', 'Thyme' ], enemy: ['Fennel', 'Parsley', 'Cauliflower', 'Cabbage', 'Kale', 'Garden Cress','Bok Choy', 'Broccoli', 'Brussel Sprouts','Boxwood' ] },
+             { name: 'Cilantro', type: "Herb", companion: ['Anise', 'Dill', 'Chervil', 'Basil', 'Mint','Nasturtium', 'Lettuce', 'Marigolds','Chives', 'Calendula', 'Thyme' ], enemy: ['Fennel', 'Lavender', 'Cauliflower', 'Cabbage', 'Kale', 'Garden Cress','Bok Choy', 'Broccoli', 'Brussel Sprouts','Chrysanthemums' ] },
+             { name: 'Cress', type: "Herb", companion: ['Lettuce', 'Basil', 'Chervil', 'Dill', 'Chives','Spinach', 'Arugula', 'Marigolds','Calendula', 'Nasturtiums', 'Thyme' ], enemy: ['Fennel', 'Lavender', 'Chrysanthemums', 'Cauliflower', 'Cabbage', 'Kale','Bok Choy', 'Broccoli', 'Brussel Sprouts' ] },
+             { name: 'Cumin', type: "Herb", companion: ['Coriander', 'Fennel', 'Dill', 'Nasturtium', 'Basil','Marjoram', 'Chamomile', 'Calendula','Sage', 'Tansy', 'Carrots','Tomatoes', 'Onions', 'Garlic','Lettuce', 'Spinach', 'Radishes', 'Peas', 'Beans', 'Cabbage' ], enemy: ['Sunflowers', 'Mustard', 'Chervil', 'Wild Radish', 'Amaranth', 'Sweetcorn','Dill' ] },
+             { name: 'Dill', type: "Herb", companion: ['Cabbage', 'Lettuce', 'Onions', 'Corn', 'Cucumbers','Broccoli', 'Brussel Sprouts', 'Kale','Cauliflower', 'Tomatoes', 'Peppers','Radishes', 'Nasturtiums', 'Chamomile','Chamomile', 'Chives', 'Basil' ], enemy: ['Carrots', 'Parsnips', 'Lovage', 'Angelica', 'Cilantro', 'Anise','Fennel' ] },
+             { name: 'Epazote', type: "Herb", companion: ['Beans', 'Corn', 'Squash', 'Tarragon', 'Marjoram','Savory', 'Oregano', 'Nasturtium','Tomatoes', 'Peppers', 'Onions','Garlic', 'Lettuce', 'Spinach','Radishes', 'Carrots', 'Chives', 'Cabbage' ], enemy: ['Mint', 'Basil', 'Cilantro', 'Fennel', 'Anise', 'Dill' ] },
+             { name: 'Lavendar', type: "Herb", companion: ['Rosemary', 'Thyme', 'Marjoram', 'Catmint', 'Yarrow','Echinacea', 'Santolina', 'Roses','Penstemon', 'Sedum', 'Dianthus','Coreopsis', 'Agastache', 'Gaillardia','Lavandin', 'Achillea' ], enemy: ['Dill', 'Oregano', 'Basil', 'Mint', 'Sage' ] },
+             { name: 'Lemon Balm', type: "Herb", companion: ['Basil', 'Chives', 'Marjoram', 'Oregano', 'Rosemary','Sage', 'Thyme', 'Mint','Nasturtium', 'Lavender', 'Tomatoes','Peppers', 'Lettuce', 'Spinach','Cabbage', 'Carrots', 'Swiss Chard', 'Radishes' ], enemy: ['Dill', 'Fennel', 'Rue', 'Tarragon' ] },
+             { name: 'Lemongrass', type: "Herb", companion: ['Basil', 'Mint', 'Chives', 'Cilantro', 'Sage','Thyme', 'Lavender', 'Oregano','Tomatoes', 'Peppers', 'Onions','Garlic', 'Lettuce', 'Spinach','Cabbage', 'Carrots' ], enemy: ['Dill', 'Fennel', 'Tarragon', 'Parsley', 'Rosemary' ] },
+             { name: 'Lovage', type: "Herb", companion: ['Tomatoes', 'Lettuce', 'Spinach', 'Cabbage', 'Carrots','Onions', 'Celery', 'Basil','Chervil', 'Marjoram', 'Mint','Sage', 'Thyme', 'Rosemary','Oregano', 'Cilantro', 'Parsley', 'Chives' ], enemy: ['Fennel', 'Dill', 'Rue', 'Lavender', 'Anise' ] },
+             { name: 'Marjoram', type: "Herb", companion: ['Basil', 'Oregano', 'Thyme', 'Rosemary', 'Sage','Chives', 'Nasturtium', 'Tarragon','Lovage', 'Tomatoes', 'Peppers','Onions', 'Garlic', 'Lettuce','Spinach', 'Cabbage', 'Carrots' ], enemy: ['Fennel', 'Dill', 'Rue', 'Lavender', 'Anise' ] },
+             { name: 'Mint', type: "Herb", companion: ['Chives', 'Dill', 'Rosemary', 'Sage', 'Cilantro','Cilantro', 'Nasturtium', 'Peppers','Lettuce', 'Spinach', 'Swiss Chard','Fennel', 'Radishes' ], enemy: ['Basil', 'Oregano', 'Thyme', 'Cabbage', 'Tomatoes', 'Carrots' ] },
+             { name: 'Nasturtium ', type: "Herb", companion: ['Tomatoes', 'Cucumbers', 'Radishes', 'Cabbage', 'Kale','Beans', 'Sunflowers', 'Marigolds','Thyme', 'Rosemary', 'Zinnias','Lettuce', 'Spinach', 'Carrots','Peas', 'Beets', 'Dill', 'Chives', 'Basil', 'Parsley', 'Cilantro' ], enemy: ['Cabbage', 'Broccoli', 'Cauliflower' ] },
+             { name: 'Oregano', type: "Herb", companion: ['Basil', 'Thyme', 'Rosemary', 'Sage', 'Marjoram','Chives', 'Nasturtium', 'Beans','Cabbage', 'Tomatoes', 'Lettuce','Spinach', 'Carrots', 'Onions','Garlic', 'Cilantro', 'Dill', 'Radishes' ], enemy: ['Fennel', 'Parsley', 'Mint' ] },
+             { name: 'Papalo', type: "Herb", companion: ['Basil', 'Chives', 'Mint', 'Lettuce', 'Spinach','Arugula', 'Kale', 'Tomatoes','Peppers', 'Onions', 'Garlic','Carrots', 'Radishes', 'Cucumbers','Beans', 'Nasturtium', 'Marigolds' ], enemy: ['Dill', 'Fennel', 'Parsley', 'Cilantro' ] },
+             { name: 'Parsley', type: "Herb", companion: ['Basil', 'Chives', 'Tomatoes', 'Carrots', 'Onions','Garlic', 'Roses', 'Celery','Spinach', 'Cabbage', 'Nasturtium','Marigolds', 'Thyme', 'Sage','Oregano', 'Rosemary' ], enemy: ['Asparagus', 'Lettuce', 'Mint', 'Dill', 'Fennel' ] },
+             { name: 'Rosemary', type: "Herb", companion: ['Thyme', 'Sage', 'Lavender', 'Oregano', 'Marjoram','Chives', 'Nasturtium', 'Beans','Tomatoes', 'Peppers', 'Onions','Garlic', 'Carrots', 'Lettuce','Spinach', 'Cabbage', 'Mint' ], enemy: ['Basil', 'Cilantro', 'Parsley', 'Dill', 'Fennel' ] },
+             { name: 'Sage', type: "Herb", companion: ['Rosemary', 'Thyme', 'Lavender', 'Oregano', 'Marjoram','Chives', 'Nasturtium', 'Beans','Tomatoes', 'Peppers', 'Onions','Garlic', 'Carrots', 'Lettuce','Spinach', 'Cabbage', 'Mint' ], enemy: ['Cilantro', 'Parsley', 'Basil', 'Dill', 'Fennel' ] },
+             { name: 'Savory', type: "Herb", companion: ['Beans', 'Rosemary', 'Thyme', 'Oregano', 'Marjoram','Sage', 'Chives', 'Nasturtium','Tomatoes', 'Peppers', 'Onions','Garlic', 'Carrots', 'Lettuce','Spinach', 'Cabbage', 'Mint' ], enemy: ['Fennel', 'Dill', 'Parsley', 'Cilantro', 'Basil' ] },
+             { name: 'Shiso', type: "Herb", companion: ['Cabbage', 'Cucumber', 'Eggplant', 'Tomato', 'Beans','Corn', 'Lettuce', 'Spinach','Strawberries', 'Radishes', 'Carrots','Onions', 'Garlic', 'Peppers','Peas', 'Marigolds', 'Chives', 'Nasturtium' ], enemy: ['Basil', 'Mint', 'Dill', 'Cilantro', 'Parsley' ] },
+             { name: 'Sorrel', type: "Herb", companion: ['Chives', 'Lovage', 'Garlic', 'Onions', 'Lettuce','Spinach', 'Kale', 'Tomatoes','Peppers', 'Carrots', 'Radishes','Beets', 'Marjoram', 'Oregano','Thyme', 'Rosemary' ], enemy: ['Mint', 'Basil', 'Dill', 'Parsley', 'Cilantro' ] },
+             { name: 'Stevia', type: "Herb", companion: ['Chives', 'Thyme', 'Oregano', 'Marjoram', 'Sage','Lavender', 'Rosemary', 'Parsley','Tomatoes', 'Peppers', 'Cucumbers','Beans', 'Lettuce', 'Spinach','Carrots', 'Onions', 'Garlic', 'Nasturtium' ], enemy: ['Mint', 'Basil', 'Dill', 'Parsley', 'Cilantro' ] },
+             { name: 'Tarragon', type: "Herb", companion: ['Chives', 'Mint', 'Oregano', 'Thyme', 'Rosemary','Sage', 'Lavender', 'Tomatoes','Peppers', 'Onions', 'Garlic','Carrots', 'Lettuce', 'Spinach','Cabbage', 'Nasturtium' ], enemy: ['Dill', 'Fennel', 'Cilantro', 'Parsley', 'Basil' ] },
+             { name: 'Thyme', type: "Herb", companion: ['Rosemary', 'Oregano', 'Marjoram', 'Lavender', 'Chives','Nasturtium', 'Tomatoes', 'Peppers','Onions', 'Garlic', 'Carrots','Lettuce', 'Spinach', 'Cabbage','Sage' ], enemy: ['Mint', 'Cilantro', 'Parsley', 'Dill', 'Basil' ] },
+         // { name: '', type: "Herb", companion: ['', '', '', '', '','', '', '','', '', '',], enemy: ['', '', '', '', '', '','', '', '','', '', '',] },
+    ]
+
+
+// Function to create HTML elements and populate them with data
+        function displayItems() {
+            const container = document.getElementById('content');
+
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.innerHTML = `
+                    <h2>${item.name}</h2>
+                    <p>Companion: ${item.companion.join(', ')}</p>
+                    <p>Enemy: ${item.enemy.join(', ')}</p>
+                `;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        // Call the displayItems function to populate the HTML with data
+        displayItems();
+    </script>

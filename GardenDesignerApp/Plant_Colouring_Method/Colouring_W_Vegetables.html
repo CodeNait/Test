@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden Bed Planner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #app {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #garden-bed {
+            width: 400px;
+            height: 400px;
+            border: 1px solid #000;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .vegetable {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            cursor: grab; /* Add cursor style for better UX */
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Garden Bed Planner</h1>
+       
+        <div id="garden-bed" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+       
+        <label for="vegetable-name">Vegetable:</label>
+        <input type="text" id="vegetable-name" placeholder="Enter vegetable name">
+       
+        <label for="vegetable-color">Color:</label>
+        <input type="color" id="vegetable-color" value="#00FF00">
+
+        <button onclick="plantVegetable()">Plant Vegetable</button>
+        <button onclick="deleteLastVegetable()">Delete Last Vegetable</button>
+    </div>
+
+    <script>
+        let gardenBed = document.getElementById('garden-bed');
+        let vegetables = []; // Array to store vegetables
+        let lastVegetableNumber = 1; // Track the last used vegetable number
+
+        function plantVegetable() {
+            let vegetableName = document.getElementById('vegetable-name').value.trim();
+            let vegetableColor = document.getElementById('vegetable-color').value;
+
+            if (vegetableName !== '') {
+                // Create a new vegetable with a unique identifier
+                let newVegetable = createVegetable(vegetableName, vegetableColor, lastVegetableNumber++);
+
+                // Set the position at the center of the garden bed
+                newVegetable.style.left = '180px';
+                newVegetable.style.top = '180px';
+
+                // Add the new vegetable to the array and the garden bed
+                vegetables.push(newVegetable);
+                gardenBed.appendChild(newVegetable);
+            }
+        }
+
+        function deleteLastVegetable() {
+            // Remove the last planted vegetable from the array and the garden bed
+            let lastVegetable = vegetables.pop();
+            if (lastVegetable) {
+                gardenBed.removeChild(lastVegetable);
+
+                // Get the associated vegetable number and update the last used number
+                let vegetableNumber = parseInt(lastVegetable.getAttribute('data-number'));
+                if (!isNaN(vegetableNumber)) {
+                    lastVegetableNumber = Math.max(lastVegetableNumber - 1, vegetableNumber);
+                }
+            }
+        }
+
+        function createVegetable(name, color, number) {
+            let vegetable = document.createElement('div');
+            vegetable.className = 'vegetable';
+            vegetable.innerText = name + ' ' + number;
+            vegetable.setAttribute('data-number', number);
+
+            // Make the vegetable draggable
+            vegetable.setAttribute('draggable', 'true');
+            vegetable.addEventListener('dragstart', (event) => {
+                event.dataTransfer.setData('text/plain', name);
+                event.dataTransfer.setData('text/color', color);
+                event.dataTransfer.setData('text/number', number);
+            });
+
+            // Set the color
+            vegetable.style.backgroundColor = color;
+
+            return vegetable;
+        }
+
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            let vegetableName = event.dataTransfer.getData('text/plain');
+            let vegetableColor = event.dataTransfer.getData('text/color');
+            let vegetableNumber = event.dataTransfer.getData('text/number');
+
+            if (vegetableName.trim() !== '') {
+                // Find the vegetable by number in the array
+                let currentVegetable = vegetables.find(veg => veg.getAttribute('data-number') == vegetableNumber);
+
+                // Set the position based on the drop coordinates
+                currentVegetable.style.left = (event.clientX - gardenBed.getBoundingClientRect().left - 20) + 'px';
+                currentVegetable.style.top = (event.clientY - gardenBed.getBoundingClientRect().top - 20) + 'px';
+
+                // Set the color
+                currentVegetable.style.backgroundColor = vegetableColor;
+            }
+        }
+    </script>
+</body>
+</html>

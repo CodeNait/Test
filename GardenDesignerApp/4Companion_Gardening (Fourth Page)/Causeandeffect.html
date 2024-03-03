@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Dropdown</title>
+<style>
+    /* Some basic styling */
+    select {
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+
+<select id="categorySelect">
+    <option value="">Carrot</option>
+    <option value="companion">Companion Vegetables</option>
+    <option value="enemy">Enemy Vegetables</option>
+    <!--<option value="pod">Podded Vegetables</option>-->
+</select>
+
+<select id="vegetableSelect">
+    <option value="">Select Vegetable</option>
+</select>
+
+<script>
+    // Vegetable data based on categories
+    const vegetableData = {
+        companion: ["Carrot", "Potato", "Radish"],
+        enemy: ["Spinach", "Lettuce", "Kale"],
+        // pod: ["Peas", "Green Beans", "Okra"]
+    };
+
+    const categorySelect = document.getElementById("categorySelect");
+    const vegetableSelect = document.getElementById("vegetableSelect");
+
+    // Function to populate vegetable dropdown based on category selection
+    function populateVegetables() {
+        const selectedCategory = categorySelect.value;
+        vegetableSelect.innerHTML = ""; // Clear previous options
+        if (selectedCategory) {
+            const vegetables = vegetableData[selectedCategory];
+            vegetables.forEach(vegetable => {
+                const option = document.createElement("option");
+                option.text = vegetable;
+                option.value = vegetable;
+                vegetableSelect.add(option);
+            });
+        }
+    }
+
+    // Event listener to trigger function when category selection changes
+    categorySelect.addEventListener("change", populateVegetables);
+</script>
+
+</body>
+</html>

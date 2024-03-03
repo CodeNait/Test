@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hidden Information Cubes</title>
+<style>
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  max-width: 600px;
+  margin: 50px auto;
+  position: relative; /* Add relative positioning to the container */
+}
+
+.cube {
+  width: 100%;
+  height: 100px;
+  background-color: #2ecc71; /* Default cube color */
+  color: white; /* Adjusted text color */
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative; /* Add relative positioning to the cube */
+}
+
+.cube.orange {
+  background-color: orange;
+}
+
+.cube.green {
+  background-color: green;
+}
+
+.cube.red {
+  background-color: red;
+}
+
+.cube.purple {
+  background-color: purple;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px); /* Position dropdown below the cube */
+  left: 0;
+  background-color: #f1f1f1; /* Adjusted dropdown background color */
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.dropdown-content p {
+  color: black; /* Set dropdown option text color to black */
+}
+
+.active .dropdown {
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Cube 1 -->
+  <div class="cube" onclick="toggleInfo(this)">
+    <span class="selectedOption">Click me</span> <!-- Updated span to display selected option -->
+    <div class="dropdown">
+      <div class="dropdown-content">
+        <p onclick="selectOption('Carrot', this)">Carrot</p>
+        <p onclick="selectOption('Broccoli', this)">Broccoli</p>
+        <p onclick="selectOption('Apple', this)">Apple</p>
+        <p onclick="selectOption('Eggplant', this)">Eggplant</p>
+      </div>
+    </div>
+  </div>
+  <!-- Cube 2 -->
+  <div class="cube" onclick="toggleInfo(this)">
+    <span class="selectedOption">Click me</span>
+    <div class="dropdown">
+      <div class="dropdown-content">
+        <p onclick="selectOption('Carrot', this)">Carrot</p>
+        <p onclick="selectOption('Broccoli', this)">Broccoli</p>
+        <p onclick="selectOption('Apple', this)">Apple</p>
+        <p onclick="selectOption('Eggplant', this)">Eggplant</p>
+      </div>
+    </div>
+  </div>
+  <!-- Cube 3 -->
+  <div class="cube" onclick="toggleInfo(this)">
+    <span class="selectedOption">Click me</span>
+    <div class="dropdown">
+      <div class="dropdown-content">
+        <p onclick="selectOption('Carrot', this)">Carrot</p>
+        <p onclick="selectOption('Broccoli', this)">Broccoli</p>
+        <p onclick="selectOption('Apple', this)">Apple</p>
+        <p onclick="selectOption('Eggplant', this)">Eggplant</p>
+      </div>
+    </div>
+  </div>
+  <!-- Cube 4 -->
+  <div class="cube" onclick="toggleInfo(this)">
+    <span class="selectedOption">Click me</span>
+    <div class="dropdown">
+      <div class="dropdown-content">
+        <p onclick="selectOption('Carrot', this)">Carrot</p>
+        <p onclick="selectOption('Broccoli', this)">Broccoli</p>
+        <p onclick="selectOption('Apple', this)">Apple</p>
+        <p onclick="selectOption('Eggplant', this)">Eggplant</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleInfo(cube) {
+  cube.classList.toggle("active");
+}
+
+function selectOption(option, element) {
+  var cube = element.parentNode.parentNode; // Get the cube element
+  cube.querySelector(".selectedOption").textContent = option;
+  
+  // Remove previous color classes
+  cube.classList.remove("orange", "green", "red", "purple");
+  
+  // Add color class based on selected option
+  if (option === "Carrot") {
+    cube.classList.add("orange");
+  } else if (option === "Broccoli") {
+    cube.classList.add("green");
+  } else if (option === "Apple") {
+    cube.classList.add("red");
+  } else if (option === "Eggplant") {
+    cube.classList.add("purple");
+  }
+}
+</script>
+
+</body>
+</html>
+

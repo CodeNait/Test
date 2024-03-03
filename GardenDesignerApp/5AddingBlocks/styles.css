@@ -1,0 +1,93 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+body {
+    background-color: rgba(240, 240, 240, 0.5); /* Background color with transparency */
+    background-image: url('Background_app.jpg'); /* Replace 'Background_app.jpg' with the path to your background image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the left */
+}
+
+.selected-options-container h2 {
+    margin-bottom: 0; 
+}
+
+.options-container .option-column h3 {
+    margin-top: 0; 
+}
+
+.selected-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.selected-option {
+    background-color: #f0f0f0;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.options-container {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.option-column {
+    margin-right: 20px;
+}
+
+.input-container {
+    margin-bottom: 20px;
+}
+
+.grid-container {
+    display: grid;
+    grid-gap: 10px;
+    justify-content: center;
+}
+
+.grid-item {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.grid-item:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+}
+
+.checkbox-container {
+    margin-bottom: 10px;
+}
+
+.checkbox-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 5px;
+}

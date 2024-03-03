@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Box Selection</title>
+<style>
+    .container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 50px;
+    }
+    .box {
+        width: 200px;
+        padding: 20px;
+        border: 1px solid #ccc;
+    }
+    /* Initially hide the child box dropdown */
+    #childBox select {
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="box" id="parentBox">
+        <h2>Parent Box</h2>
+        <select id="options" onchange="updateBox()">
+            <option value="plant">Plant</option> <!-- "Plant" option is shown by default -->
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+        </select>
+    </div>
+    <div class="box" id="childBox">
+        <h2>Child Box</h2>
+        <select id="affectedOptions">
+            <option value="affectedOption1">Affected Option 1</option>
+            <option value="affectedOption2">Affected Option 2</option>
+        </select>
+    </div>
+</div>
+
+<script>
+    // Function to update the child box based on the selected option in the parent box
+    function updateBox() {
+        var selectedOption = document.getElementById("options").value;
+        var childBoxDropdown = document.querySelector("#childBox select");
+
+        // Hide the child box dropdown by default
+        childBoxDropdown.style.display = "none";
+
+        // Reset affected box options
+        var affectedOptions = document.getElementById("affectedOptions");
+        affectedOptions.innerHTML = "";
+
+        // Add options based on the selected option in the first box
+        switch(selectedOption) {
+            case "option1":
+                affectedOptions.innerHTML = "<option value='affectedOption1'>Affected Option 1</option>";
+                childBoxDropdown.style.display = "block"; // Display the child box dropdown only if option 1 is selected
+                break;
+            case "option2":
+                affectedOptions.innerHTML = "<option value='affectedOption2'>Affected Option 2</option>";
+                childBoxDropdown.style.display = "block"; // Display the child box dropdown only if option 2 is selected
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Call updateBox function when the page loads to set initial state
+    window.onload = updateBox;
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

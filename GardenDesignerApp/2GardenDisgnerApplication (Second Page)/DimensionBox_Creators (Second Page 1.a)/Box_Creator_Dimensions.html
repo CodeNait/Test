@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resizable, Moveable, and Deletable Shapes</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    canvas {
+      border: 1px solid #000;
+      margin-top: 10px;
+    }
+
+    button {
+      margin-top: 10px;
+    }
+
+    #areaDisplay {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <label for="shape">Select shape:</label>
+  <select id="shape" onchange="setDefaults()">
+    <option value="square">Square</option>
+    <option value="rectangle">Rectangle</option>
+  </select>
+
+  <label for="width">Width:</label>
+  <input type="number" id="width" placeholder="Enter width">
+
+  <label for="height">Height:</label>
+  <input type="number" id="height" placeholder="Enter height">
+
+  <button onclick="drawShape()">Draw</button>
+  <button onclick="deleteLastShape()">Delete Last</button>
+  <button onclick="plantNow()">Plant Now</button> <!-- New button for planting the shapes -->
+
+  <canvas id="myCanvas" width="400" height="400"></canvas>
+  <div id="areaDisplay"></div>
+
+  <script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var shapes = loadShapesFromStorage() || [];
+    var isDragging = false;
+    var selectedShapeIndex = -1;
+    var scale = 10; // Scale factor for display
+
+    function drawSquare(x, y, width, height) {
+      ctx.beginPath();
+      ctx.rect(x, y, width * scale, height * scale);
+      ctx.stroke();
+    }
+
+    function drawRectangle(x, y, width, height) {
+      ctx.beginPath();
+      ctx.rect(x, y, width * scale, height * scale);
+      ctx.stroke();
+    }
+
+    function drawShapes() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (var i = 0; i < shapes.length; i++) {
+        var shape = shapes[i];
+
+        if (shape.type === "square") {
+          drawSquare(shape.x, shape.y, shape.width, shape.height);
+        } else if (shape.type === "rectangle") {
+          drawRectangle(shape.x, shape.y, shape.width, shape.height);
+        }
+      }
+    }
+
+    function calculateArea(width, height) {
+      return width * height;
+    }
+
+    function updateTotalArea() {
+      var totalArea = 0;
+
+      for (var i = 0; i < shapes.length; i++) {
+        totalArea += shapes[i].area;
+      }
+
+      drawAreaDisplay(totalArea);
+    }
+
+    function drawAreaDisplay(area) {
+      var areaDisplay = document.getElementById("areaDisplay");
+      areaDisplay.textContent = "Total Area: " + area.toFixed(2);
+    }
+
+    function drawShape() {
+      var selectedShapeType = document.getElementById("shape").value;
+      var shapeWidth = parseFloat(document.getElementById("width").value) || getDefaultWidth(selectedShapeType);
+      var shapeHeight = parseFloat(document.getElementById("height").value) || getDefaultHeight(selectedShapeType);
+
+      var newShape = {
+        type: selectedShapeType,
+        x: Math.random() * (canvas.width - shapeWidth * scale),
+        y: Math.random() * (canvas.height - shapeHeight * scale),
+        width: shapeWidth,
+        height: shapeHeight
+      };
+
+      newShape.area = calculateArea(newShape.width, newShape.height);
+      shapes.push(newShape);
+      drawShapes();
+      updateTotalArea();
+
+      // Add event listener for dragging
+      canvas.addEventListener("mousedown", startDrag);
+      canvas.addEventListener("mousemove", drag);
+      canvas.addEventListener("mouseup", endDrag);
+    }
+
+    function deleteLastShape() {
+      if (shapes.length > 0) {
+        var deletedShape = shapes.pop();
+        drawShapes();
+        updateTotalArea();
+      }
+    }
+
+    function startDrag(e) {
+      var mouseX = e.clientX - canvas.getBoundingClientRect().left;
+      var mouseY = e.clientY - canvas.getBoundingClientRect().top;
+
+      for (var i = shapes.length - 1; i >= 0; i--) {
+        var shape = shapes[i];
+
+        if (
+          mouseX >= shape.x &&
+          mouseX <= shape.x + shape.width * scale &&
+          mouseY >= shape.y &&
+          mouseY <= shape.y + shape.height * scale
+        ) {
+          isDragging = true;
+          selectedShapeIndex = i;
+          break;
+        }
+      }
+    }
+
+    function drag(e) {
+      if (isDragging && selectedShapeIndex !== -1) {
+        shapes[selectedShapeIndex].x = e.clientX - canvas.getBoundingClientRect().left;
+        shapes[selectedShapeIndex].y = e.clientY - canvas.getBoundingClientRect().top;
+        drawShapes();
+        drawAreaDisplay(totalArea);
+      }
+    }
+
+    function endDrag() {
+      isDragging = false;
+      selectedShapeIndex = -1;
+    }
+
+    function setDefaults() {
+      var selectedShapeType = document.getElementById("shape").value;
+      var widthInput = document.getElementById("width");
+      var heightInput = document.getElementById("height");
+
+      widthInput.value = getDefaultWidth(selectedShapeType);
+      heightInput.value = getDefaultHeight(selectedShapeType);
+    }
+
+    function getDefaultWidth(shapeType) {
+      return shapeType === "rectangle" ? 10 : 10;
+    }
+
+    function getDefaultHeight(shapeType) {
+      return shapeType === "rectangle" ? 5 : 10;
+    }
+
+    function plantNow() {
+      // Generate a unique identifier for this set of shapes
+      var identifier = Date.now().toString();
+
+      // Save the shapes and the identifier to localStorage
+      localStorage.setItem('shapes', JSON.stringify(shapes));
+      localStorage.setItem('identifier', identifier);
+
+      // Encode shapes data in the URL and redirect to the Vegetable Planting Page
+      var url = 'http://127.0.0.1:5501/GardenDesignerApp/3Vegetable+Herb+Fruit_Selector%20(Third%20Page,%20Complete)/Veggie_Herb_Fruit_Selector.html?' + identifier + '&shapes=' + encodeURIComponent(JSON.stringify(shapes));
+      window.location.href = url;
+    }
+
+    function loadShapesFromStorage() {
+      // Load shapes from localStorage
+      var savedShapes = localStorage.getItem('shapes');
+      return savedShapes ? JSON.parse(savedShapes) : [];
+    }
+  </script>
+</body>
+</html>
+

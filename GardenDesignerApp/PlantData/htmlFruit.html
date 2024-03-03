@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Landing Page</title>
+</head>
+<body>
+    <div id="content"></div>
+
+    <script type="text/javascript">
+        const items = [
+                  { name: 'Apple Tree', type: "Fruit", companion: ['Daffodils', 'Crocuses', 'Hyacinths', 'Chives', 'Garlic','Marigolds', 'Nasturtiums', 'Yarrow','Tansy', 'Calendula', 'Dill', 'Fennel', 'Comfrey', 'Lavender', 'Phacelia',], enemy: ['Grass', 'Potatoes', 'Tomatoes', 'Peppers', 'Eggplant', 'Black Walnut Trees','Birch Trees', 'Cherry Trees', 'Plum Trees','Red Maples' ] },
+                  { name: 'Apricot Tress', type: "Fruit", companion: ['Daffodils', 'Crocuses', 'Hyacinths', 'Chives', 'Garlic','Marigolds', 'Nasturtiums', 'Yarrow','Tansy', 'Calendula', 'Dill', 'Fennel', 'Comfrey', 'Lavender', 'Phacelia',], enemy: ['Grass', 'Potatoes', 'Tomatoes', 'Peppers', 'Eggplant', 'Black Walnut Trees','Cherry Trees', 'Plum Trees', 'Red Maples' ] },
+                  { name: 'Black Berry', type: "Fruit", companion: ['Blueberries', 'Raspberries', 'Strawberries', 'Gooseberries', 'Nasturtiums','Marigolds', 'Borage', 'Calendula','Chives', 'Dill', 'Tansy', 'Oregano', 'Mint', 'Chervil', 'Thyme',], enemy: ['Potatoes', 'Tomatoes', 'Peppers', 'Eggplant', 'Broccoli', 'Cabbage','Cauliflower', 'Sunflowers', 'Cucumbers','Melons', 'Pumpkin' ] },
+                  { name: 'Blueberry', type: "Fruit", companion: ['Azaleas', 'Rhododendrons', 'Lingonberries', 'Huckleberries', 'Cranberries','Strawberries', 'Raspberries', 'Blackberries','Gooseberries', 'Gooseberries', 'Marigolds', 'Lupines', 'Ferns', 'Highbush Cranberries', 'Chives',], enemy: ['Broccoli', 'Cabbage', 'Cauliflower', 'Potatoes', 'Tomatoes', 'Peppers','Eggplant', 'Sunflowers', 'Cucumbers','Melons', 'Pumpkins', 'Squash' ] },
+                  { name: 'Cantaloupe', type: "Fruit", companion: ['Nasturtiums', 'Marigolds', 'Sunflowers', 'Radishes', 'Oregano','Mint', 'Basil', 'Dill','Calendula', 'Borage', 'Chives', 'Tansy', 'Nasturtiums', 'Cucumbers', 'Beans',], enemy: ['Potatoes', 'Tomatoes', 'Peppers', 'Eggplant', 'Broccoli', 'Cabbage','Cauliflower', 'Pumpkins', 'Winter Squash','Watermelon', 'Honeydew Melon' ] },
+                  { name: 'Cherry Tree', type: "Fruit", companion: ['Daffodils', 'Crocuses', 'Hyacinths', 'Chives', 'Garlic','Marigolds', 'Nasturtiums', 'Yarrow','Tansy', 'Calendula', 'Dill', 'Fennel', 'Comfrey', 'Lavender', 'Phacelia',], enemy: ['Grass', 'Potatoes', 'Tomatoes', 'Peppers', 'Eggplant', 'Black Walnut Trees','Birch Trees', 'Apricot Trees', 'Plum Tress','Red Maples' ] },
+                  { name: 'Currant', type: "Fruit", companion: ['Daffodils', 'Crocuses', 'Hyacinths', 'Chives', 'Garlic','Marigolds', 'Nasturtiums', 'Yarrow','Tansy', 'Calendula', 'Dill', 'Fennel', 'Comfrey', 'Lavendar', 'Phacelia',], enemy: ['Grass', 'Potatoes', 'Tomatoes', 'Peppers', 'Eggplant', 'Black Walnut Trees','Birch Trees', 'Cherry Trees', 'Apricot Trees','Plum Trees', 'Red Maples' ] },
+                  { name: 'Elderberry', type: "Fruit", companion: ['Daffodils', 'Crocuses', 'Hyacinths', 'Chives', 'Garlic','Marigolds', 'Nasturtiums', 'Yarrow','Tansy', 'Calendula', 'Dill', 'Fennel', 'Comfrey', 'Lavendar', 'Phacelia',], enemy: ['Grass', 'Potatoes', 'Tomatoes', 'Peppers', 'Eggplant', 'Black Walnut Trees','Birch Trees', 'Cherry Trees', 'Apricot Trees','Plum Trees' ] },
+                  { name: 'Fig Tree', type: "Fruit", companion: ['Daffodils', 'Crocuses', 'Hyacinths', 'Chives', 'Garlic','Marigolds', 'Nasturtiums', 'Yarrow','Tansy', 'Calendula', 'Dill', 'Fennel', 'Comfrey', 'Lavendar', 'Phacelia',], enemy: ['Grass', 'Potatoes', 'Tomatoes', 'Peppers', 'Eggplant', 'Black Walnut Trees','Birch Trees', 'Cherry Trees', 'Apricot Trees','Plum Trees' ] },
+                  { name: 'Gooseberry', type: "Fruit", companion: ['Blueberries', 'Currants', 'Raspberries', 'Blackberries', 'Marigolds','Borage', 'Calendula', 'Chives','Dill', 'Tansy', 'Oregano', 'Mint', 'Ferns', 'Azaleas', 'Rhododendrons' ], enemy: ['Broccoli', 'Cabbage', 'Cauliflower', 'Potatoes', 'Tomatoes', 'Peppers','Eggplant', 'Sunflowers', 'Cucumbers','Melons', 'Pumpkins' ] },
+                  { name: 'Grape', type: "Fruit", companion: ['Strawberries', 'Asparagus', 'Onions', 'Basil', 'Oregano','Hyssop', 'Chives', 'Lavender','Yarrow', 'Marigolds', 'Nasturtiums', 'Germaniums', 'Sunflowers', 'Sweet Woodruff', 'Alyssum' ], enemy: ['Lettuce', 'Onions', 'Collard Greens', 'Cabbage', 'Garlic', 'Grass','Black Walnut', 'Juniper, Pines', 'Blackberry','Raspberry', 'Wild Vines' ] },
+                  { name: 'Honeydew', type: "Fruit", companion: ['Radishes', 'Nasturtiums', 'Lettuce', 'Beans', 'Marigolds','Onions', 'Garlic', 'Basil','Tomatoes', 'Peppers', 'Carrots', 'Thyme', 'Oregano', 'Parsley', 'Spinach', 'Beets','Chives' ], enemy: ['Potatoes', 'Pumpkins', 'Squash', 'Watermelons', 'Cucumbers', 'Sunflowers','Corn', 'Fennel', 'Dill','Chervil' ] },
+                  { name: 'Kiwi(Hardy)', type: "Fruit", companion: ['Grapes', 'Blueberries', 'Blackberries', 'Raspberries', 'Strawberries','Currants', 'Lavender', 'Rosemary','Chives', 'Marigolds', 'Basil', 'Thyme', 'Oregano', 'Daffodils', 'Daisies', 'Lilies', 'Ferns', 'Hostas', 'Lupines', 'Daylilies',], enemy: ['Grass', 'Black Walnut', 'Fennel', 'Sunflowers', 'Pines', 'Tomatoes','Peppers', 'Potatoes', 'Pumpkins' ] },
+                  { name: 'Medlar Tree', type: "Fruit", companion: ['Comfrey', 'Chives', 'Nasturtiums', 'Daffodils', 'Marigolds','Yarrow', 'Lavender', 'Thyme','Lupines', 'Strawberries', 'Rosemary', 'Sage', 'Basil', 'Oregano', 'Tansy', 'Crocuses', 'Calendula', 'Daisies', 'Hostas', 'Daylilies'], enemy: ['Grass', 'Black Walnut', 'Fennel', 'Sunflowers', 'Pines', 'Tomatoes','Peppers', 'Potatoes', 'Pumpkins' ] },
+                  { name: 'Mulberry Tree', type: "Fruit", companion: ['Comfrey', 'Chives', 'Nasturtiums', 'Daffodils', 'Marigolds','Yarrow', 'Lavender', 'Thyme','Lupines', 'Strawberries', 'Rosemary', 'Sage', 'Basil', 'Oregano', 'Tansy', 'Crocuses', 'Calendula', 'Daisies', 'Hostas', 'Daylilies'], enemy: ['Grass', 'Black Walnut', 'Fennel', 'Sunflowers', 'Pines', 'Tomatoes','Peppers', 'Potatoes', 'Pumpkins' ] },
+                  { name: 'Nectarine Tree', type: "Fruit", companion: ['Comfrey', 'Chives', 'Nasturtiums', 'Daffodils', 'Marigolds','Yarrow', 'Lavender', 'Thyme','Lupines', 'Strawberries', 'Rosemary', 'Sage', 'Basil', 'Oregano', 'Tansy', 'Crocuses', 'Calendula', 'Daisies', 'Hostas', 'Daylilies'], enemy: ['Grass', 'Black Walnut', 'Fennel', 'Sunflowers', 'Pines', 'Tomatoes','Peppers', 'Potatoes', 'Pumpkins' ] },
+                  { name: 'Pawpaw Tree', type: "Fruit", companion: ['Comfrey', 'Chives', 'Borage', 'Yarrow', 'Dill', 'Marigold', 'Lavender', 'Nasturtiums','Strawberries', 'Clover', 'Hostas', 'Ferns', 'Wild Ginger', 'Bloodroot', 'Virginia Bluebells', 'Columbine' ], enemy: ['Grass', 'Black Walnut Trees', 'Sycamore', 'Poplar', 'Bowelder', 'Hickory','Oaks', 'Maples', 'Rhododendron','Azalea' ] },
+                  { name: 'Peach Tree', type: "Fruit", companion: ['Clover', 'Marigold', 'Nasturtium', 'Comfrey', 'Chamomile', 'Dill', 'Oregano', 'Borage','Lavender', 'Thyme', 'Nectarine Tree', 'Rosemary', 'Daffodil', 'Zinnias', 'Day Lilies', 'Cosmos', 'Bail', 'Onions' ], enemy: ['Grass', 'Black Walnut Tree', 'Fescue', 'English Ivy', 'Juniper', 'Maple','Wild Grape', 'Redroot Pigweed', 'Wild Mustard' ] },
+                  { name: 'Pear', type: "Fruit", companion: ['Comfrey', 'Chives', 'Dill', 'Nasturtium', 'Lavender','Marigold', 'Yarrow', 'Borage','Thyme', 'Oregano', 'Daffodils', 'Catmint', 'Lungwort', 'Tulips', 'Chamomile', 'Strawberries', 'Cosmos', 'Hostas' ], enemy: ['Grass', 'Black Walnut Tree', 'Fescue', 'English Ivy', 'Juniper', 'Maple','Horseweed', 'Canadian Thistle' ] },
+                  { name: 'Persimmon Tree', type: "Fruit", companion: ['Comfrey', 'Chives', 'Dill', 'Nasturtium', 'Lavender','Marigold', 'Yarrow', 'Borage','Thyme', 'Oregano', 'Daffodils', 'Catmint', 'Lungwort', 'Tulips', 'Chamomile', 'Strawberries', 'Cosmos', 'Hostas' ], enemy: ['Grass', 'Black Walnut Tree', 'Fescue', 'English Ivy', 'Juniper', 'Maple','Horseweed', 'Canadian Thistle' ] },
+                  { name: 'Plum Tree', type: "Fruit", companion: ['Comfrey', 'Chives', 'Dill', 'Nasturtium', 'Lavender','Marigold', 'Yarrow', 'Borage','Thyme', 'Oregano', 'Daffodils', 'Catmint', 'Lungwort', 'Tulips', 'Chamomile', 'Strawberries', 'Cosmos', 'Hostas' ], enemy: ['Grass', 'Black Walnut Tree', 'Fescue', 'English Ivy', 'Juniper', 'Maple','Horseweed', 'Canadian Thistle'] },
+                  { name: 'Pumpkin', type: "Fruit", companion: ['Corn', 'Beans', 'Radishes', 'Nasturtiums', 'Oregano','Marigolds', 'Sunflowers', 'Dill','Catnip', 'Tansy', 'Mint', 'Basil', 'Chives', 'Thyme', 'Sage',], enemy: ['Potatoes', 'Squash', 'Cucumbers', 'Melons', 'Tomatoes', 'Broccoli','Cabbage', 'Cauliflower', 'Strawberries','Carrots', 'Onions' ] },
+                  { name: 'Quince Tree', type: "Fruit", companion: ['Comfrey', 'Chives', 'Dill', 'Nasturtium', 'Lavender','Marigold', 'Yarrow', 'Borage','Thyme', 'Oregano', 'Daffodils', 'Catmint', 'Lungwort', 'Tulips', 'Chamomile', 'Strawberries', 'Cosmos', 'Hostas',], enemy: ['Grass', 'Clover', 'Other fruit trees' ] },
+                  { name: 'Raspberry', type: "Fruit", companion: ['Comfrey', 'Chives', 'Garlic', 'Tansy', 'Nasturtiums','Marigold', 'Lupine', 'Yarrow','Borage', 'Carrots', 'Dill', 'Daffodils', 'Catnip', 'Lettuce', 'Tulips', 'Cosmos',], enemy: ['Potatoes', 'Tomatoes', 'Eggplant', 'Strawberries', 'Blackberries', 'Bell Peppers' ] },
+                  { name: 'Rhubarb', type: "Fruit", companion: ['Beans', 'Lettuce', 'Strawberries', 'Onions', 'Nasturtiums','Chives', 'Carrots', 'Catnip','Daffodils', 'Tulips', 'Lungwort', 'Cosmos', 'Lavender', 'Chamomile', 'Hostas',], enemy: ['Potatoes', 'Tomatoes', 'Eggplant', 'Peppers', 'Blackberries', 'Broccoli','Cabbage' ] },
+                  { name: 'Seaberry', type: "Fruit", companion: ['Peas', 'Beans', 'Comfrey', 'Chives', 'Lupine','Yarrow', 'Nasturtium', 'Borage','Calendula', 'Daffodils', 'Tulips', 'Cosmos', 'Lavender', 'Chamomile', 'Hostas',], enemy: ['Grass', 'Black Walnut', 'Broccoli', 'Cabbage' ] },
+                  { name: 'Serviceberry', type: "Fruit", companion: ['Lupine', 'Comfrey', 'Chives', 'Nasturtiums', 'Yarrow','Borage', 'Lavender', 'Daffodils','Tulips', 'Cosmos', 'Hostas', 'Lungwort', 'Chamomile' ], enemy: ['Grass', 'Black Walnut', 'Cabbage', 'Broccoli' ] },
+                  { name: 'Strawberry', type: "Fruit", companion: ['Borage', 'Lupine', 'Marigold', 'Nasturtium', 'Chamomile','Thyme', 'Spinach', 'Lettuce','Carrots', 'Onions', 'Garlic', 'Daffodils', 'Tulips', 'Cosmos', 'Lavender', 'Chives'], enemy: ['Cabbage', 'Broccoli', 'Potatoes', 'Tomatoes', 'Eggplant', 'Peppers','Blackberries', 'Raspberries', 'Clover','Mint' ] },
+                  { name: 'Watermelon', type: "Fruit", companion: ['Nasturtium', 'Radish', 'Marigold', 'Sunflower', 'Basil','Mint', 'Cucumber', 'Pumpkin','Oregano', 'Chamomile', 'Lettuce', 'Zinnias', 'Dill', 'Alyssum', 'Borage',], enemy: ['Corn', 'Potatoes', 'Squash', 'Tomatoes', 'Peppers', 'Broccoli','Cabbage', 'Lavender', 'Rosemary','Fennel', 'Onions', 'Garlic',] },
+                 // { name: '', type: "Fruit", companion: ['', '', '', '', '','', '', '','', '', '', '', '', '', '',], enemy: ['', '', '', '', '', '','', '', '','', '', '',] },
+
+
+
+                ]
+
+    // Function to create HTML elements and populate them with data
+    function displayItems() {
+            const container = document.getElementById('content');
+
+            items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.innerHTML = `
+                    <h2>${item.name}</h2>
+                    <p>Companion: ${item.companion.join(', ')}</p>
+                    <p>Enemy: ${item.enemy.join(', ')}</p>
+                `;
+                container.appendChild(itemDiv);
+            });
+        }
+
+        // Call the displayItems function to populate the HTML with data
+        displayItems();
+    </script>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Companion and Enemy Plants</title>
+<style>
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.box {
+    width: 280px;
+    display: flex; /* Make the box flex container */
+    flex-direction: column; /* Stack children vertically */
+}
+
+.box button {
+    width: calc(100% - 20px); /* Adjust width as needed */
+    margin-top: 10px;
+}
+
+.box select {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.companionPlants,
+.enemyPlants {
+    display: none;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="box">
+        <h3 class="plantHeader">Artichoke</h3>
+        <div class="plantBox">Companion</div>
+        <button onclick="showCompanionPlants(this)">Like</button>
+        <select class="companionPlants">
+            <!-- Options will be added dynamically using JavaScript -->
+        </select>
+    </div>
+    <div class="box">   
+        <div class="enemyBox">Enemy</div>
+        <button onclick="showEnemyPlants(this)">Dislike</button>
+        <select class="enemyPlants">
+            <!-- Options will be added dynamically using JavaScript -->
+        </select>
+    </div>
+</div>
+<div class="container">
+    <div class="box">
+        <h3 class="plantHeader">Arugula</h3>
+        <div class="plantBox">Companion</div>
+        <button onclick="showCompanionPlants(this)">Like</button>
+        <select class="companionPlants">
+            <!-- Options will be added dynamically using JavaScript -->
+        </select>
+    </div>
+    <div class="box">
+        <div class="enemyBox">Enemy</div>
+        <button onclick="showEnemyPlants(this)">Dislike</button>
+        <select class="enemyPlants">
+            <!-- Options will be added dynamically using JavaScript -->
+        </select>
+    </div>
+</div>
+<div class="container">
+    <div class="box">
+        <h3 class="plantHeader">Bean</h3>
+        <div class="plantBox">Companion</div>
+        <button onclick="showCompanionPlants(this)">Like</button>
+        <select class="companionPlants">
+            <!-- Options will be added dynamically using JavaScript -->
+        </select>
+    </div>
+    <div class="box">
+        <div class="enemyBox">Enemy</div>
+        <button onclick="showEnemyPlants(this)">Dislike</button>
+        <select class="enemyPlants">
+            <!-- Options will be added dynamically using JavaScript -->
+        </select>
+    </div>
+</div>
+
+<script>
+    const companionMap = {
+        'Artichoke': ["Tarragon", 'Marigolds', "Lettuce" , "Mint", "Nasturtiums", "Chives", "Coriander", "Borage", "Rosemary"],
+        'Arugula': [''],
+        'Bean': ["Beets", "Broccoli", "Brussels sprouts", "Cabbage", "Carrots", "Celery", "Chards", "Cucumber"],
+        // Add more companion plants as needed
+    };
+
+    const enemyMap = {
+    'Artichoke': ['Potatoes', 'Fennel', 'Broccoli','Cabbage', 'Cauliflower','Eggplant', 'Strawberries', 'Cucumbers'],
+    'Bean': ['Enemy1', 'Enemy2',],
+    'Arugula': ['Enemy1', 'Enemy2'], 
+    // Add more enemy plants as needed
+
+    };
+
+    function showCompanionPlants(button) {
+        const container = button.parentNode;
+        const plantHeader = container.querySelector('.plantHeader');
+        const plantBox = container.querySelector('.plantBox');
+        const companionPlants = container.querySelector('.companionPlants');
+        const selectedPlant = plantHeader.textContent.trim();
+        const companions = companionMap[selectedPlant];
+        plantBox.textContent = "Companion";
+        companionPlants.innerHTML = '';
+        companions.forEach(companion => {
+            const option = document.createElement('option');
+            option.text = companion;
+            companionPlants.add(option);
+        });
+        companionPlants.style.display = 'block';
+        container.parentNode.querySelector('.enemyPlants').style.display = 'none';
+    }
+
+    function showEnemyPlants(button) {
+        const container = button.parentNode.parentNode;
+        const plantHeader = container.querySelector('.plantHeader');
+        const enemyBox = container.querySelector('.enemyBox');
+        const enemyPlants = container.querySelector('.enemyPlants');
+        const selectedPlant = plantHeader.textContent.trim();
+        const enemies = enemyMap[selectedPlant];
+        enemyBox.textContent = "Enemy";
+        enemyPlants.innerHTML = '';
+        enemies.forEach(enemy => {
+            const option = document.createElement('option');
+            option.text = enemy;
+            enemyPlants.add(option);
+        });
+        enemyPlants.style.display = 'block';
+        container.querySelector('.companionPlants').style.display = 'none';
+    }
+
+</script>
+
+</body>
+</html>

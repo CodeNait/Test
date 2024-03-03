@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Garden Design App</title>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Garden Design App</h1>
+
+    <div id="garden-container"></div>
+    This is the vegetable section
+    <div id="vegetable-dropdown-container">
+      <label for="vegetableDropdown">Select Vegetable:</label>
+      <select id="vegetableDropdown">
+         Add more vegetable optios as needed
+        <option value="Artichoke">Artichoke</option>
+        <option value="Arugula">Arugula</option>
+        <option value="Asparagus">Asparagus</option>
+        <option value="Bean">Bean</option>
+        <option value="Beet">Beet</option>
+        <option value="Bell Pepper">Bell Pepper</option>
+        <option value="Borage">Borage</option>
+        <option value="Broccoli">Broccoli</option>
+        <option value="Brussel Sprout">Brussel Sprout</option>
+        <option value="Cabbage">Cabbage</option>
+        <option value="Carrot">Carrot</option>
+        <option value="Cauliflower">Cauliflower</option>
+        <option value="Celeriac">Celeriac</option>
+        <option value="Celery">Celery</option>
+        <option value="Chili Pepper">Chili Pepper</option>
+        <option value="Chives">Chives</option>
+        <option value="Collard Greens">Collard Greens</option>
+        <option value="Corn">Corn</option>
+        <option value="Cucumber">Cucumber</option>
+        <option value="Eggplant">Eggplant</option>
+        <option value="Garlic">Garlic</option>
+        <option value="Kale">Kale</option>
+        <option value="Kohlrabi">Kohlrabi</option>
+        <option value="Leek">Leek</option>
+        <option value="Lettuce">Lettuce</option>
+        <option value="Mustard Greens">Mustard Greens</option>
+        <option value="Okra">Okra</option>
+        <option value="Onion">Onion</option>
+        <option value="Parsnip">Parsnip</option>
+        <option value="Peas">Peas</option>
+        <option value="Potato">Potato</option>
+        <option value="Radish">Radish</option>
+        <option value="Rutabaga">Rutabaga</option>
+        <option value="Spinach">Spinach</option>
+        <option value="Summer Squash">Summer Squash</option>
+        <option value="Sweet Potato">Sweet Potato</option>
+        <option value="Swiss Chard">Swiss Chard</option>
+        <option value="Tomato">Tomato</option>
+        <option value="Turnip">Turnip</option>
+        <option value="Winter Squash">Winter Squash</option>
+        <option value="Zucchini">Zucchini</option>
+      </select>
+    </div>
+    This is the fruit section
+    <div id="fruit-dropdown-container">
+      <label for="fruitDropdown">Select Fruit:</label>
+      <select id="fruitDropdown">
+         Add more fruit options as needed 
+        <option value="appleTree">Apple Tree</option>
+        <option value="apricoteTree">Apricote Tree</option>
+        <option value="blackberry">Blackberry</option>
+        <option value="blueberry">Blueberry</option>
+        <option value="cantaloupe">Cantaloupe</option>
+        <option value="cherryTree">Cherry Tree</option>
+        <option value="currant">Currant</option>
+        <option value="elderberry">Elderberry</option>
+        <option value="figTree">Fig Tree</option>
+        <option value="gooseberry">Gooseberry</option>
+        <option value="grape">Grape</option>
+        <option value="honeydew">Honeydew</option>
+        <option value="kiwiHardy">Kiwi (Hardy)</option>
+        <option value="medlarTree">Medlar Tree</option>
+        <option value="mulberryTree">m=Mulberry Tree</option>
+        <option value="nectarineTree">Nectarine Tree</option>
+        <option value="pawpawTree">Pawpaw Tree</option>
+        <option value="peachTree">peachTree</option>
+        <option value="pearTree">Pear Tree</option>
+        <option value="persimmonTree">Persimmon Tree</option>
+        <option value="plumTree">Plum Tree</option>
+        <option value="pumpkin">Pumpkin</option>
+        <option value="quinceTree">Quince Tree</option>
+        <option value="raspberry">Raspberry</option>
+        <option value="rhubarb">Rhubarb</option>
+        <option value="seaberry">Seaberry</option>
+        <option value="serviceberry">Serviceberry</option>
+        <option value="strawberry">strawberry</option>
+        <option value="watermelon">Watermelon</option>
+      </select>
+    </div>
+  </div>
+  This is the herb section
+  <div id="herb-dropdown-container">
+    <label for="herbDropdown">Selct Herb/Spice:</label>
+    <select id="herbDropdown">
+       Add more herb options as needed 
+      <option value="aniseHyssop">Anise Hyssop</option>
+      <option value="basil">Basil</option>
+      <option value="bayLeaf">Bay Leaf</option>
+      <option value="beeBalm">Bee Balm</option>
+      <option value="chamomile">Chamomile</option>
+      <option value="chervil">Chervil</option>
+      <option value="cilantro">Cilantro</option>
+      <option value="cress">Cress</option>
+      <option value="cumin">Cumin</option>
+      <option value="dill">Dill</option>
+      <option value="epazote">Epazote</option>
+      <option value="lavendar">Lavendar</option>
+      <option value="lemonBalm">Lemon Balm</option>
+      <option value="lemongrass">Lemongrass</option>
+      <option value="lovage">Lovage</option>
+      <option value="marjoram">Marjoram</option>
+      <option value="mint">Mint</option>
+      <option value="nasturtium">Nasturtium</option>
+      <option value="oregano">Oregano</option>
+      <option value="papalo">Papalo</option>
+      <option value="parsley">Parsley</option>
+      <option value="rosemerry">Rosemerry</option>
+      <option value="sage">Sage</option>
+      <option value="savory">Savory</option>
+      <option value="shiso">Shiso</option>
+      <option value="sorrel">Sorrel</option>
+      <option value="stevia">Stevia</option>
+      <option value="tarragon">Tarragon</option>
+      <option value="thyme">Thyme</option>
+    </select>
+  </div>
+</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Retrieve stored positions and rotations from localStorage
+        const storedPositions = JSON.parse(localStorage.getItem('boxPositions')) || {};
+        const storedRotations = JSON.parse(localStorage.getItem('boxRotations')) || {};
+        const totalCost = localStorage.getItem('totalCost');
+        
+        // Apply stored positions and rotations to the elements
+        for (const id in storedPositions) {
+            const element = document.createElement('div');
+            element.id = id;
+
+            const storedPosition = storedPositions[id];
+            const storedRotation = storedRotations[id] || 0;
+
+            // Apply stored position
+            element.style.left = storedPosition.left + 'px';
+            element.style.top = storedPosition.top + 'px';
+
+            // Apply stored rotation
+            if (id.includes('rectangle')) {
+                element.className = 'rectangle';
+                element.style.width = '160px';
+                element.style.height = '80px';
+                element.style.backgroundColor = 'red';
+                element.style.marginLeft = '90px';
+                element.style.transformOrigin = 'center center';
+                element.style.transform = `rotate(${storedRotation}deg)`;
+            } else {
+                element.className = 'box';
+                element.style.width = '80px';
+                element.style.height = '80px';
+                element.style.backgroundColor = 'blue';
+            }
+
+            document.getElementById('garden-container').appendChild(element);
+        }
+        // Display the total cost on the page
+        if (totalCost) {
+            const costBox = document.createElement('div');
+            costBox.id = 'totalCostBox';
+            costBox.innerText = `Total Cost: ${totalCost}`;
+            document.body.appendChild(costBox);
+        }
+    });
+  </script>
+</body>
+</html>

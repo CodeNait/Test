@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* Light earthy tone */
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff; /* White */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Light shadow */
+    border-radius: 10px;
+    text-align: center;
+}
+
+h1 {
+    color: #4d4d4d; /* Dark brown */
+    margin-bottom: 20px;
+}
+
+h2, h3 {
+    color: #4d4d4d; /* Dark brown */
+}
+
+button {
+    background-color:  #4CAF50; /* Brown */
+    color: #ffffff; /* White */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+
+button:hover {
+    background-color: #225424 ; /* Darker brown on hover */
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+#selectPlantOptions {
+    display: none;
+}
+
+#checkboxContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.checkboxOption {
+    margin: 5px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column label {
+    margin-bottom: 5px;
+}
+
+#confirmContainer {
+    position: fixed;
+    bottom: 20px; /* Adjust as needed */
+    right: 20px; /* Adjust as needed */
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+#confirmSelection {
+    /* Add any desired styles */
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Add this CSS to your existing styles.css or create a new CSS file */
+.small-image {
+    max-width: 200px; /* Set maximum width */
+    max-height: 200px; /* Set maximum height */
+}

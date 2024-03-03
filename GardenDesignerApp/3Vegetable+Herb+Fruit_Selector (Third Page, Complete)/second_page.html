@@ -1,0 +1,101 @@
+<script>
+    // Function to fetch plant options from the backend API
+    function fetchPlantOptions() {
+      fetch('http://localhost:3000/plant-options') // Assuming your backend API endpoint is '/plant-options'
+        .then(response => response.json())
+        .then(data => {
+          populatePlantOptionsDropdown(data, document.getElementById("plant1"));
+        })
+        .catch(error => console.error('Error fetching plant options:', error));
+    }
+  
+    // Function to fetch companions for a selected plant option from the backend API
+    function fetchCompanions(selectedOption) {
+      fetch(`http://localhost:3000/companions/${selectedOption}`) // Assuming your backend API endpoint is '/companions/:selectedOption'
+        .then(response => response.json())
+        .then(data => {
+          populateCompanionsDropdown(data, document.getElementById("plant2"));
+        })
+        .catch(error => console.error('Error fetching companions:', error));
+    }
+  
+    // Function to populate the companions dropdown
+    function populateCompanionsDropdown(companions, dropdown) {
+      dropdown.innerHTML = '<option value="">Select Option</option>';
+      companions.forEach(companion => {
+        const option = document.createElement("option");
+        option.value = companion;
+        option.text = companion;
+        dropdown.add(option);
+      });
+    }
+  
+    // Function to handle change event on plant option dropdown
+    function handlePlantOptionChange(selectedOption) {
+      fetchCompanions(selectedOption);
+      selectedPlant = selectedOption;
+    }
+  
+    // Function to save the grid with selected vegetables
+    function saveGrid() {
+      // Construct an array of selected vegetables
+      const selectedVegetables = [];
+      document.querySelectorAll('input[name="vegetables"]:checked').forEach(checked => {
+        selectedVegetables.push(checked.value);
+      });
+  
+      // Construct an object representing the grid
+      const gridData = {
+        height: parseInt(document.getElementById("height").value),
+        width: parseInt(document.getElementById("width").value),
+        selectedVegetables: selectedVegetables,
+        selectedPlant: selectedPlant,
+        grid: grid
+      };
+  
+      // Send a POST request to save the grid data
+      fetch('http://localhost:3000/save-grid', { // Assuming your backend API endpoint is '/save-grid'
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(gridData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+      })
+      .catch(error => console.error('Error saving grid:', error));
+    }
+  
+    // Function to retrieve saved grid data from the backend
+    function retrieveSavedGrid() {
+      fetch('http://localhost:3000/saved-grid') // Assuming your backend API endpoint is '/saved-grid'
+        .then(response => response.json())
+        .then(data => {
+          // Populate height and width inputs
+          document.getElementById("height").value = data.height;
+          document.getElementById("width").value = data.width;
+  
+          // Populate selected vegetables checkboxes
+          data.selectedVegetables.forEach(vegetable => {
+            document.getElementById(vegetable.toLowerCase()).checked = true;
+          });
+  
+          // Populate selected plant dropdown
+          document.getElementById("plant1").value = data.selectedPlant;
+  
+          // Populate companions dropdown based on selected plant
+          fetchCompanions(data.selectedPlant);
+  
+          // Populate grid
+          grid = data.grid;
+          createGrid();
+        })
+        .catch(error => console.error('Error retrieving saved grid:', error));
+    }
+  
+    // Call fetchPlantOptions function when the page loads
+    window.onload = fetchPlantOptions;
+  </script>
+  

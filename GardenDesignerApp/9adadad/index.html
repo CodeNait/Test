@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planting Selection</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .options {
+        margin-bottom: 40px; /* Increased margin for more space */
+    }
+    .plants-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 20px;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        grid-gap: 5px;
+        margin-top: 20px;
+    }
+    .grid-item {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        position: relative;
+    }
+    .planted {
+        background-color: lightgreen;
+    }
+    .plant-name {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Select Vegetables to Plant</h2>
+    <div class="options">
+        <label><input type="radio" class="plant-option" value="Carrot"> Carrot</label>
+        <label><input type="radio" class="plant-option" value="Tomato"> Tomato</label>
+        <label><input type="radio" class="plant-option" value="Lettuce"> Lettuce</label>
+        <label><input type="radio" class="plant-option" value="Cucumber"> Cucumber</label>
+        <label><input type="radio" class="plant-option" value="Bell Pepper"> Bell Pepper</label>
+    </div>
+    <button id="plantButton">Plant Now</button>
+    <div id="plantsContainer" class="plants-box"></div>
+    <div id="gridContainer" class="grid-container"></div>
+    <button id="resetButton">Reset Grid</button>
+</div>
+
+<script>
+    // Function to set up event listener for planting
+    function setupPlanting(selectedPlants) {
+        document.querySelectorAll('.grid-item').forEach(function(square) {
+            square.removeEventListener('click', handlePlanting); // Remove previous listener to prevent duplicate event bindings
+            square.addEventListener('click', handlePlanting); // Add the event listener for single-click planting
+        });
+    
+        function handlePlanting(event) {
+            const square = event.target;
+            if (selectedPlants.length > 0 && !square.classList.contains('planted')) {
+                var plantName = selectedPlants.shift();
+                var plantNameDiv = document.createElement('div');
+                plantNameDiv.textContent = plantName;
+                plantNameDiv.classList.add('plant-name');
+                square.appendChild(plantNameDiv);
+                square.classList.add('planted');
+            }
+        }
+    }
+    
+    document.getElementById("plantButton").addEventListener("click", function() {
+        var selectedPlants = [];
+        var checkboxes = document.querySelectorAll(".plant-option:checked");
+        checkboxes.forEach(function(checkbox) {
+            selectedPlants.push(checkbox.value);
+        });
+    
+        if (selectedPlants.length === 0) {
+            alert("Please select at least one vegetable to plant.");
+            return;
+        }
+    
+        var plantsContainer = document.getElementById("plantsContainer");
+        plantsContainer.innerHTML = "<h3>Planted Vegetables:</h3>";
+        selectedPlants.forEach(function(plant) {
+            var plantItem = document.createElement("div");
+            plantItem.textContent = plant;
+            plantsContainer.appendChild(plantItem);
+        });
+    
+        // Call the setupPlanting function to set up event listeners for planting
+        setupPlanting(selectedPlants);
+    });
+    
+    const gridContainer = document.getElementById('gridContainer');
+    const resetButton = document.getElementById('resetButton');
+    
+    function createGrid(size) {
+      for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+          const square = document.createElement('div');
+          square.classList.add('grid-item');
+          gridContainer.appendChild(square);
+        }
+      }
+    }
+    
+    function resetGrid() {
+      const gridItems = document.querySelectorAll('.grid-item');
+      gridItems.forEach(item => {
+        item.classList.remove('planted');
+        item.innerHTML = '';
+      });
+    }
+    
+    // Creating a 10x10 grid
+    createGrid(10);
+    
+    // Reset button event listener
+    resetButton.addEventListener('click', resetGrid);
+    </script>
+    
+    
+
+
+</body>
+</html>

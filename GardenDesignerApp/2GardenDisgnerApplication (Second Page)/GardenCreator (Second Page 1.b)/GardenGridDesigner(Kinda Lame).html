@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      text-align: center;
+    }
+
+    #garden-container {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .grid-cell {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .selected {
+      background-color: lightgreen;
+    }
+
+    #grid-count-input {
+      margin-top: 10px;
+    }
+
+    button {
+      margin: 10px;
+    }
+  </style>
+  <title>Interactive Garden Designer</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Interactive Garden Designer</h1>
+
+    <label for="grid-count-input">Number of Grids:</label>
+    <input type="number" id="grid-count-input" min="1" value="25">
+
+    <button id="reset-button">Reset</button>
+
+    <div id="garden-container"></div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      var gardenContainer = $('#garden-container');
+      var gridCountInput = $('#grid-count-input');
+
+      function generateGrids(count) {
+        gardenContainer.empty();
+
+        for (var i = 0; i < count; i++) {
+          var gridCell = $('<div class="grid-cell">');
+          gridCell.text(i + 1);
+
+          gridCell.click(function() {
+            $(this).toggleClass('selected');
+          });
+
+          gridCell.draggable({
+            containment: "#garden-container",
+            scroll: false,
+          });
+
+          gardenContainer.append(gridCell);
+        }
+      }
+
+      // Initial generation of grids
+      generateGrids(gridCountInput.val());
+
+      // Handle input change to dynamically update the grid count
+      gridCountInput.change(function() {
+        generateGrids($(this).val());
+      });
+
+      // Handle reset button click
+      $('#reset-button').click(function() {
+        $('.grid-cell').removeClass('selected');
+      });
+    });
+  </script>
+
+</body>
+</html>

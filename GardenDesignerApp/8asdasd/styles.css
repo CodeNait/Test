@@ -1,0 +1,17 @@
+/* styles.css */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(10, 30px); /* Each square is 30px wide */
+    grid-template-rows: repeat(10, 30px); /* Each square is 30px tall */
+    gap: 2px; /* gap between grid squares */
+    border: 1px solid #000; /* border around the grid */
+}
+
+.grid-item {
+    background-color: #fff; /* default color of grid squares */
+    border: 1px solid #000; /* border around grid squares */
+}
+
+.grid-item.planted {
+    background-color: green; /* color of planted squares */
+}

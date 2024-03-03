@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Companion Dictionary</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Companion Dictionary</h1>
+
+        <button id="selectPlant">Choose Your Plants!</button>
+
+        <!-- Update the HTML inside the selectPlantOptions div -->
+        <div id="selectPlantOptions" style="display: none;">
+            <h3>Select Plant Options</h3>
+            <div id="checkboxContainer" class="flex-container">
+                <div class="column" id="vegetableColumn"></div>
+                <div class="column" id="herbColumn"></div>
+                <div class="column" id="fruitColumn"></div>
+            </div>
+            <!-- Only one "Confirm Selection" button -->
+            <button id="confirmSelection" style="display: none;">Confirm Selection</button>
+        </div>
+
+        <h2>Plants</h2>
+        <select id="dropdown"></select>
+        <img id="plantImage" src="" alt="Plant Image" class="small-image"> <!-- Image container -->
+        <Fresh_orange_carrots class="jpg"></Fresh_orange_carrots>
+        <Broccoli_Picture.jpg class=".jpg"></Broccoli_Picture.jpg>
+        <Celeriac.jpg class=".jpg"></Celeriac.jpg>
+        <FwE66qpeemfXhSH4VKNvBKcC6osDUcMwALAwkVXd.jpg class></FwE66qpeemfXhSH4VKNvBKcC6osDUcMwALAwkVXd.jpg> <!-- Not very good, maybe change-->
+        <Artichoke.jpg class=".jpg"></Atichoke.jpg>
+        <Arugula.jpg class=".jpg"></Arugula.jpg>
+        <Asparagus.jpg class=".jpg"></Asparagus.jpg>
+        <Green_bean.jpg class=".jpg"></Green_bean.jpg>
+
+        <h2>Companions</h2>
+        <select id="dropDownCompanion"></select>
+    </div>
+
+    <script src="plants.js"></script> <!-- Include plants.js -->
+    <script src="script.js"></script>
+</body>
+</html>
+

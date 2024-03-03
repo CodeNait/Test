@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your App Name</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        text-align: center;
+    }
+    .tables-container {
+        display: flex;
+        flex-wrap: nowrap; /* Prevent wrapping */
+        justify-content: space-between;
+        /*overflow-x: auto; /* Enable horizontal scrolling */
+    }
+    .table {
+        flex: 0 0 calc(33.33% - 20px); /* Adjusted flex-basis */
+        margin-bottom: 20px;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .table h2 {
+        margin-top: 0;
+    }
+    .table label {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .table input[type="checkbox"] {
+        margin-right: 5px;
+    }
+    .btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+    .selected-options {
+        margin-top: 20px;
+    }
+    .sub-dropdown {
+        margin-top: 5px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Your App Name</h1>
+    
+    <div class="tables-container">
+        <div class="table">
+            <h2>Table 1</h2>
+            <label><input type="checkbox" class="option1"> Option 1 Table1</label>
+            <label><input type="checkbox" class="option2"> Option 2</label>
+            <label><input type="checkbox" class="option3"> Option 3</label>
+            <label><input type="checkbox" class="option4"> Option 4</label>
+            <label><input type="checkbox" class="option5"> Option 5</label>
+            <label><input type="checkbox" class="option6"> Option 6</label>
+        </div>
+
+        <div class="table">
+            <h2>Table 2</h2>
+            <label><input type="checkbox" class="option1"> Option 1 Table2</label>
+            <label><input type="checkbox" class="option2"> Option 2</label>
+            <label><input type="checkbox" class="option3"> Option 3</label>
+            <label><input type="checkbox" class="option4"> Option 4</label>
+            <label><input type="checkbox" class="option5"> Option 5</label>
+            <label><input type="checkbox" class="option6"> Option 6</label>
+        </div>
+
+        <div class="table">
+            <h2>Table 3</h2>
+            <label><input type="checkbox" class="option1"> Option 1 Table3</label>
+            <label><input type="checkbox" class="option2"> Option 2</label>
+            <label><input type="checkbox" class="option3"> Option 3</label>
+            <label><input type="checkbox" class="option4"> Option 4</label>
+            <label><input type="checkbox" class="option5"> Option 5</label>
+            <label><input type="checkbox" class="option6"> Option 6</label>
+        </div>
+    </div>
+
+    <button class="btn" onclick="populateDropdown()">Submit</button>
+
+    <div class="selected-options">
+        <label for="selected-options">Selected Options:</label>
+        <select id="selected-options" multiple></select>
+    </div>
+</div>
+
+<script>
+    function populateDropdown() {
+        const selectedOptions = document.querySelectorAll('input[type="checkbox"]:checked');
+        const dropdown = document.getElementById('selected-options');
+        
+        // Clear existing options
+        dropdown.innerHTML = '';
+
+        // Populate dropdown with selected options
+        selectedOptions.forEach(option => {
+            const text = option.parentElement.textContent.trim();
+            const value = option.parentElement.querySelector('input').classList[0];
+            const mainOption = new Option(text, value);
+            dropdown.add(mainOption);
+        });
+    }
+
+    // Event listener for the "Selected Options" box
+    document.getElementById('selected-options').addEventListener('change', function(event) {
+        const selectedOption = event.target.value;
+        
+        // Check if the selected option is not empty
+        if (selectedOption) {
+            // Create a new dropdown for the selected option
+            const subDropdown = document.createElement('select');
+            subDropdown.className = 'sub-dropdown';
+            subDropdown.multiple = true;
+
+            // Add "Good" and "Bad" options to the dropdown
+            const goodOption = new Option('Good', 'good');
+            const badOption = new Option('Bad', 'bad');
+            subDropdown.add(goodOption);
+            subDropdown.add(badOption);
+
+            // Insert the new dropdown after the selected option
+            event.target.parentNode.insertBefore(subDropdown, event.target.nextSibling);
+        }
+    });
+</script>
+
+
+</body>
+</html>
+
+

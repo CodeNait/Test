@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        .dropdown-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dropdown {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            cursor: move;
+        }
+
+        #draggable2 {
+            background-color: white; /* Default background color */
+            transition: background-color 0.5s;
+        }
+
+        .good-choice {
+            background-color: green !important;
+        }
+
+        .bad-choice {
+            background-color: red !important;
+        }
+
+        .neutral-choice {
+            background-color: white !important;
+        }
+    </style>
+    <title>Draggable & Droppable Dropdowns</title>
+</head>
+<body>
+
+    <div class="dropdown-container">
+        <div class="dropdown" id="draggable1">
+            <label for="first-dropdown">Select Vegetable:</label>
+            <select id="first-dropdown" onchange="updateSecondDropdown()">
+                <option value="carrot">Carrot</option>
+                <option value="corn">Corn</option>
+                <option value="neutral">Neutral</option>
+            </select>
+        </div>
+
+        <div class="dropdown" id="draggable2">
+            <label for="second-dropdown">Select Choice:</label>
+            <select id="second-dropdown">
+            </select>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            $(".dropdown").draggable({
+                containment: 'document',
+                scroll: false
+            });
+
+            $("#second-dropdown").droppable({
+                accept: "#draggable1",
+                drop: function(event, ui) {
+                    updateSecondDropdown();
+                }
+            });
+        });
+
+        function updateSecondDropdown() {
+            var firstDropdown = document.getElementById('first-dropdown');
+            var secondDropdown = document.getElementById('second-dropdown');
+            var selectedOption = firstDropdown.value;
+
+            // Clear existing options
+            secondDropdown.innerHTML = '';
+
+            // Set background color based on the selected option
+            var secondaryBox = document.getElementById('draggable2');
+            if (selectedOption === 'carrot') {
+                secondaryBox.classList.add('good-choice');
+                secondaryBox.classList.remove('bad-choice', 'neutral-choice');
+            } else if (selectedOption === 'corn') {
+                secondaryBox.classList.add('bad-choice');
+                secondaryBox.classList.remove('good-choice', 'neutral-choice');
+            } else if (selectedOption === 'neutral') {
+                secondaryBox.classList.add('neutral-choice');
+                secondaryBox.classList.remove('good-choice', 'bad-choice');
+            } else {
+                secondaryBox.classList.remove('good-choice', 'bad-choice', 'neutral-choice');
+            }
+
+            // Populate second dropdown based on the selected option in the first dropdown
+            switch (selectedOption) {
+                case 'carrot':
+                    addOption(secondDropdown, 'good-choice-1', 'Good Choice 1');
+                    addOption(secondDropdown, 'good-choice-2', 'Good Choice 2');
+                    break;
+                case 'corn':
+                    addOption(secondDropdown, 'bad-choice-1', 'Bad Choice 1');
+                    addOption(secondDropdown, 'bad-choice-2', 'Bad Choice 2');
+                    break;
+                case 'neutral':
+                    addOption(secondDropdown, 'neutral-choice-1', 'Neutral Choice 1');
+                    addOption(secondDropdown, 'neutral-choice-2', 'Neutral Choice 2');
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function addOption(selectElement, value, text) {
+            var option = document.createElement('option');
+            option.value = value;
+            option.text = text;
+            selectElement.add(option);
+        }
+
+        // Initialize second dropdown based on the default value of the first dropdown
+        updateSecondDropdown();
+    </script>
+
+</body>
+</html>
+
+
+
+

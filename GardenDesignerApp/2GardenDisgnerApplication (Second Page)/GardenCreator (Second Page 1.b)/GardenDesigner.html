@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-size: 40px 40px;
+            background-image:
+            linear-gradient(to right, grey 2px, transparent 2px),
+            linear-gradient(to bottom, grey 2px, transparent 2px);
+        }
+
+        .box, .rectangle {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .box {
+            background-color: blue;
+        }
+
+        .rectangle {
+            width: 160px;
+            height: 80px;
+            background-color: red; /* Change color as needed */
+            margin-left: 90px; /* Adjust margin as needed this move it horizontally */
+            transform-origin: center center;
+        }
+
+        #resetButton, #rotateButton, #counterBox, #areaBox, #plantNow, #costBox {
+            position: absolute;
+            top: 10px;
+            cursor: pointer;
+            padding: 5px;
+            background-color: #ccc;
+        }
+
+        #resetButton {
+            right: 780px;
+        }
+
+        #rotateButton {
+            right: 725px;
+        }
+
+        #counterBox {
+            right: 420px;
+        }
+
+        #areaBox {
+            right: 175px;
+        }
+        #plantNow {
+            right: 885px;
+        }
+        #costBox {
+            right: 10px; /* Adjust position as needed */
+        }
+    </style>
+    <title>Draggable Boxes with Reset, Rotate, and Area Calculation</title>
+</head>
+<body>
+    <div class="box" id="box1" draggable="true"></div>
+    <div class="rectangle" id="rectangle1" draggable="true" ondblclick="rotateRectangle(this)"></div>
+    <div class="box" id="box2" draggable="true"></div>
+    <div class="rectangle" id="rectangle2" draggable="true" ondblclick="rotateRectangle(this)"></div>
+    <div class="box" id="box3" draggable="true"></div>
+    <div class="rectangle" id="rectangle3" draggable="true" ondblclick="rotateRectangle(this)"></div>
+    <!-- Add more boxes and rectangles as needed -->
+
+    <div id="resetButton" onclick="resetPositions()">Reset</div>
+    <div id="rotateButton" onclick="rotateSelectedRectangle()">Rotate</div>
+    <div id="counterBox"></div>
+    <div id="areaBox"></div>
+    <div id="costBox"></div>
+    <div id="plantNow" onclick="redirectToPlantPage()">Plant Now</div>
+
+    <script>
+        let originalPositions = {};
+        let originalRotations = {};
+        let squareCount = 0;
+        let rectangleCount = 0;
+        let countedSquares = new Set();
+        let countedRectangles = new Set();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Store original positions and rotations for all boxes and rectangles
+            document.querySelectorAll('.box, .rectangle').forEach(function(element) {
+                originalPositions[element.id] = element.getBoundingClientRect();
+                originalRotations[element.id] = 0;
+            });
+        });
+
+        let activeBox = null;
+        let activeRecBox = null;
+
+        document.addEventListener('mousedown', function(event) {
+            if (event.target.classList.contains('box')) {
+                activeBox = event.target;
+                handleDrag(activeBox);
+                if (!countedSquares.has(activeBox)) {
+                    squareCount++;
+                    countedSquares.add(activeBox);
+                }
+            } else if (event.target.classList.contains('rectangle')) {
+                activeRecBox = event.target;
+                handleDrag(activeRecBox);
+                if (!countedRectangles.has(activeRecBox)) {
+                    rectangleCount++;
+                    countedRectangles.add(activeRecBox);
+                }
+            }
+
+            updateCounter();
+        });
+
+        function handleDrag(activeElement) {
+            const offsetX = event.clientX - activeElement.getBoundingClientRect().left;
+            const offsetY = event.clientY - activeElement.getBoundingClientRect().top;
+
+            function dragMove(moveEvent) {
+                const x = moveEvent.clientX - offsetX;
+                const y = moveEvent.clientY - offsetY;
+
+                activeElement.style.left = `${x}px`;
+                activeElement.style.top = `${y}px`;
+
+                updateArea(); // Update area during drag
+            }
+
+            function dragEnd() {
+                document.removeEventListener('mousemove', dragMove);
+                document.removeEventListener('mouseup', dragEnd);
+            }
+
+            document.addEventListener('mousemove', dragMove);
+            document.addEventListener('mouseup', dragEnd);
+        }
+
+        function rotateRectangle(element) {
+            const currentRotation = originalRotations[element.id] || 0;
+            const newRotation = (currentRotation + 90) % 360;
+            element.style.transform = `rotate(${newRotation}deg)`;
+            originalRotations[element.id] = newRotation;
+
+            updateArea(); // Update area after rotation
+        }
+
+        function rotateSelectedRectangle() {
+            // Rotate the currently selected rectangle by 90 degrees
+            if (activeRecBox) {
+                rotateRectangle(activeRecBox);
+            }
+        }
+
+        function resetPositions() {
+            // Reset all boxes and rectangles to their original positions and rotations
+            document.querySelectorAll('.box, .rectangle').forEach(function(element) {
+                const originalPosition = originalPositions[element.id];
+                const originalRotation = originalRotations[element.id] || 0;
+
+                // Reset position
+                element.style.left = originalPosition.left + 'px';
+                element.style.top = originalPosition.top + 'px';
+
+                // Reset rotation
+                if (element.classList.contains('rectangle')) {
+                    // If it's a rectangle, reset to original horizontal position
+                    element.style.transform = 'rotate(0deg)';
+                    originalRotations[element.id] = 0;
+                    countedRectangles.delete(element);
+                } else {
+                    // For other elements, reset rotation normally
+                    element.style.transform = `rotate(${originalRotation}deg)`;
+                    countedSquares.delete(element);
+                }
+            });
+
+            squareCount = 0;
+            rectangleCount = 0;
+            countedSquares.clear();
+            countedRectangles.clear();
+            updateCounter();
+            updateArea();
+        }
+
+        function updateCounter() {
+            document.getElementById('counterBox').innerText = `Squares: ${squareCount}, Rectangles: ${rectangleCount}`;
+        }
+
+        function updateArea() {
+            const squareFootage = 4 * squareCount + 8 * rectangleCount;
+            const costPerSquareFoot = 9;
+            const totalCost = squareFootage * costPerSquareFoot;
+
+            document.getElementById('areaBox').innerText = `Total Area: ${squareFootage} square feet`;
+            document.getElementById('costBox').innerText = `Total Cost: $${totalCost}`;
+        }
+        function redirectToPlantPage() {
+        // Update the function to pass the total cost to the next page
+        const totalCost = document.getElementById('costBox').innerText;
+
+            localStorage.setItem('boxPositions', JSON.stringify(originalPositions));
+            localStorage.setItem('boxRotations', JSON.stringify(originalRotations));
+
+            // Store the total cost in localStorage
+        localStorage.setItem('totalCost', totalCost);
+            // Link for Button "Plant Now" put URL
+            window.location.href = 'http://127.0.0.1:5501/GardenDesignerApp/3Vegetable+Herb+Fruit_Selector%20(Third%20Page,%20Complete)/Veggie_Herb_Fruit_Selector.html';
+        }
+
+    </script>
+</body>
+</html>

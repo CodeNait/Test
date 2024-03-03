@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clickable Grid</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+    }
+    #checkboxes {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .checkbox-container {
+        margin-right: 10px;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px; /* Increased gap for better visibility */
+        width: 80%; /* Increased width to make the grid more visible */
+        margin: 20px auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px; /* Added padding for better aesthetics */
+        overflow: hidden;
+    }
+    .grid-item {
+        background-color: lightgray;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .red {
+        background-color: #ffcccc !important;
+    }
+    .green {
+        background-color: #ccffcc !important;
+    }
+    select {
+        width: 100%; /* Set the width of the dropdown menus to 100% */
+        padding: 8px;
+        font-size: 16px;
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    button {
+        margin: 0 5px;
+        padding: 10px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<div id="checkboxes">
+    <!-- A-Z checkboxes -->
+</div>
+<div class="container-wrapper">
+    <div class="grid-container" id="gridContainer1">
+        <!-- JavaScript will fill in the cells here -->
+    </div>
+</div>
+<div class="button-container">
+    <button onclick="addGrid()">Add Grid</button>
+    <button onclick="removeGrid()">Remove Grid</button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const gridContainer1 = document.getElementById("gridContainer1");
+    createGrid(gridContainer1); // Create initial grid
+});
+
+function createGrid(container) {
+    let cells = []; // Array to store cell elements
+    let dropdowns = []; // Array to store dropdown elements
+
+    // Define the content of each cell
+    const cellContent = [
+        "Option 1", "Option 2", "Option 3", "Option 4",
+        "Option 5", "Option 6", "Option 7", "Option 8",
+        "Option 9", "Option 10", "Option 11", "Option 12",
+        "Option 13", "Option 14", "Option 15", "Option 16"
+    ];
+
+    // Create checkboxes for options A to Z
+    const checkboxesDiv = document.getElementById("checkboxes");
+    for (let i = 65; i <= 90; i++) { // ASCII codes for A-Z
+        const checkbox = document.createElement("input");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.setAttribute("id", String.fromCharCode(i));
+        checkbox.addEventListener("change", populateDropdowns);
+        
+        const label = document.createElement("label");
+        label.setAttribute("for", String.fromCharCode(i));
+        label.textContent = String.fromCharCode(i);
+
+        const checkboxContainer = document.createElement("div");
+        checkboxContainer.classList.add("checkbox-container");
+        checkboxContainer.appendChild(checkbox);
+        checkboxContainer.appendChild(label);
+
+        checkboxesDiv.appendChild(checkboxContainer);
+    }
+
+    function populateDropdowns() {
+        const selectedOptions = [];
+        checkboxesDiv.querySelectorAll("input[type='checkbox']:checked").forEach(checkbox => {
+            selectedOptions.push(checkbox.id);
+        });
+
+        // Update dropdown menus
+        dropdowns.forEach(dropdown => {
+            dropdown.innerHTML = `<option value="" selected disabled hidden>Select Option</option>`;
+            selectedOptions.forEach(option => {
+                dropdown.innerHTML += `<option value="${option}">${option}</option>`;
+            });
+        });
+    }
+
+    // Create 4x4 grid
+    for (let i = 0; i < 16; i++) { // Corrected loop to create 16 cells
+        const cell = document.createElement("div");
+        cell.classList.add("grid-item");
+        cell.setAttribute("data-row", Math.floor(i / 4));
+        cell.setAttribute("data-col", i % 4);
+
+        // Create dropdown menu
+        const dropdown = document.createElement("select");
+        dropdown.innerHTML = `<option value="" selected disabled hidden>Select Option</option>`;
+        dropdown.addEventListener("change", function() {
+            fillCell(cell, dropdown.value);
+            // Check adjacent cell and update dropdown options
+            const adjacentCellIndex = i + (i % 4 === 3 ? -1 : 1); // Index of the adjacent cell
+            const adjacentDropdown = dropdowns[adjacentCellIndex];
+            const selectedOption = dropdown.value;
+            const options = adjacentDropdown.querySelectorAll("option");
+            options.forEach(option => {
+                option.classList.remove("red", "green");
+                if (option.value === selectedOption) {
+                    option.classList.add(selectedOption === "A" ? "red" : "green");
+                }
+            });
+        });
+        dropdowns.push(dropdown);
+        cell.appendChild(dropdown);
+
+        // Add cell to array
+        cells.push(cell);
+        container.appendChild(cell);
+    }
+
+    function fillCell(cell, content) {
+        const row = parseInt(cell.getAttribute("data-row"));
+        const col = parseInt(cell.getAttribute("data-col"));
+
+        // Set content of the cell
+        cell.textContent = cellContent[row * 4 + col] + ": " + content;
+    }
+}
+
+function addGrid() {
+    const containerWrapper = document.querySelector(".container-wrapper");
+    const newGridContainer = document.createElement("div");
+    newGridContainer.classList.add("grid-container");
+    const newGridId = "gridContainer" + (containerWrapper.children.length + 1);
+    newGridContainer.id = newGridId;
+    containerWrapper.appendChild(newGridContainer);
+    createGrid(newGridContainer);
+}
+
+function removeGrid() {
+    const containerWrapper = document.querySelector(".container-wrapper");
+    if (containerWrapper.children.length > 1) {
+        containerWrapper.removeChild(containerWrapper.lastChild);
+    }
+}
+</script>
+</body>
+</html>

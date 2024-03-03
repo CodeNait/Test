@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scrollable Square with Checkboxes</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    #optionsContainer {
+        width: 100%;
+        height: auto;
+        overflow-y: scroll;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .option {
+        width: 150px;
+        height: 30px;
+        margin: 5px;
+    }
+    #selectedOptions {
+        width: 100%;
+        height: 400px; /* Adjust as needed */
+        overflow-y: scroll;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    .grid {
+        width: 200px;
+        height: 200px;
+        border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+    }
+</style>
+</head>
+<body>
+    <div id="optionsContainer">
+        <div class="option"><input type="checkbox" id="option1" class="checkbox"> Option 1</div>
+        <div class="option"><input type="checkbox" id="option2" class="checkbox"> Option 2</div>
+        <div class="option"><input type="checkbox" id="option3" class="checkbox"> Option 3</div>
+        <div class="option"><input type="checkbox" id="option4" class="checkbox"> Option 4</div>
+        <div class="option"><input type="checkbox" id="option5" class="checkbox"> Option 5</div>
+        <div class="option"><input type="checkbox" id="option6" class="checkbox"> Option 6</div>
+        <div class="option"><input type="checkbox" id="option7" class="checkbox"> Option 7</div>
+        <div class="option"><input type="checkbox" id="option8" class="checkbox"> Option 8</div>
+    </div>
+    
+    <div id="selectedOptions"></div>
+    
+    <script>
+        // Function to populate the selected options into the square
+        function populateSquare() {
+            const selectedOptions = document.querySelectorAll('.checkbox:checked');
+            const square = document.getElementById('selectedOptions');
+            square.innerHTML = '';
+
+            selectedOptions.forEach(option => {
+                const label = document.createElement('div');
+                label.textContent = option.nextSibling.textContent.trim();
+                label.classList.add('grid');
+                square.appendChild(label);
+            });
+        }
+
+        // Event listener for checkboxes to trigger population of the square
+        document.querySelectorAll('.checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', populateSquare);
+        });
+    </script>
+</body>
+</html>
+

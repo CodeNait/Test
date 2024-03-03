@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Options Selector</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        height: 2000px; /* Adjust height as needed */
+    }
+    .option-box {
+        display: none;
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        cursor: pointer;
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        padding: 12px 16px;
+        z-index: 1;
+    }
+    .option-box:hover .dropdown-content {
+        display: block;
+    }
+</style>
+</head>
+<body>
+    <h2>Select an option:</h2>
+    <form>
+        <input type="radio" id="option1" name="options" value="option1">
+        <label for="option1">Option 1</label><br>
+        <input type="radio" id="option2" name="options" value="option2">
+        <label for="option2">Option 2</label><br>
+        <input type="radio" id="option3" name="options" value="option3">
+        <label for="option3">Option 3</label><br>
+    </form>
+    <div id="option1-box" class="option-box">Select Options</div>
+    <div id="option2-box" class="option-box">Select Options</div>
+    <div id="option3-box" class="option-box">Select Options</div>
+
+<script>
+    const option1Radio = document.getElementById('option1');
+    const option2Radio = document.getElementById('option2');
+    const option3Radio = document.getElementById('option3');
+    const option1Box = document.getElementById('option1-box');
+    const option2Box = document.getElementById('option2-box');
+    const option3Box = document.getElementById('option3-box');
+
+    // Hide options boxes initially
+    [option1Box, option2Box, option3Box].forEach(box => {
+        box.style.display = 'none';
+    });
+
+    option1Radio.addEventListener('change', function() {
+        if (this.checked) {
+            option1Box.textContent = `Selected Option: ${this.value}`;
+            option1Box.style.display = 'block';
+        }
+    });
+
+    option2Radio.addEventListener('change', function() {
+        if (this.checked) {
+            option2Box.textContent = `Selected Option: ${this.value}`;
+            option2Box.style.display = 'block';
+        }
+    });
+
+    option3Radio.addEventListener('change', function() {
+        if (this.checked) {
+            option3Box.textContent = `Selected Option: ${this.value}`;
+            option3Box.style.display = 'block';
+        }
+    });
+</script>
+</body>
+</html>
+

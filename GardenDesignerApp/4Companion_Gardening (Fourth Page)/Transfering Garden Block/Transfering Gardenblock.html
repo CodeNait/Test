@@ -1,0 +1,87 @@
+<!-- HTML for the page with the table -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Garden Design App</title>
+    <style>
+        #table-container {
+            position: absolute;
+            top: 10px; /* Adjust the top position as needed */
+            right: 10px; /* Adjust the right position as needed */
+        }
+
+        #vegetable-dropdown-container {
+            position: absolute;
+            top: 10px; /* Adjust the top position as needed */
+            right: 120px; /* Adjust the right position as needed */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Garden Design App</h1>
+
+    <div id="garden-container"></div>
+
+    <div id="vegetable-dropdown-container">
+        <label for="vegetableDropdown">Select Vegetable:</label>
+        <select id="vegetableDropdown">
+            <option value="">Carrot</option>
+            <option value="">Tomato</option>
+            <!-- Add more vegetable options as needed -->
+        </select>
+    </div>
+
+    <!-- Adjusted CSS for the table -->
+    <div id="table-container">
+        <table id="your-table-id" class="your-table-class">
+            <!-- Your table content goes here -->
+        </table>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Retrieve stored positions and rotations from localStorage
+        const storedPositions = JSON.parse(localStorage.getItem('boxPositions')) || {};
+        const storedRotations = JSON.parse(localStorage.getItem('boxRotations')) || {};
+
+        // Apply stored positions and rotations to the elements
+        for (const id in storedPositions) {
+            const element = document.createElement('div');
+            element.id = id;
+
+            const storedPosition = storedPositions[id];
+            const storedRotation = storedRotations[id] || 0;
+
+            // Apply stored position
+            element.style.left = storedPosition.left + 'px';
+            element.style.top = storedPosition.top + 'px';
+
+            // Apply stored rotation
+            if (id.includes('rectangle')) {
+                element.className = 'rectangle';
+                element.style.width = '160px';
+                element.style.height = '80px';
+                element.style.backgroundColor = 'red';
+                element.style.marginLeft = '90px';
+                element.style.transformOrigin = 'center center';
+                element.style.transform = `rotate(${storedRotation}deg)`;
+            } else {
+                element.className = 'box';
+                element.style.width = '80px';
+                element.style.height = '80px';
+                element.style.backgroundColor = 'blue';
+            }
+
+            document.getElementById('garden-container').appendChild(element);
+        }
+    });
+</script>
+</body>
+</html>

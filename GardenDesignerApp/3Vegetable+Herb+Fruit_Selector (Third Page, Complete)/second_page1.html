@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Block Manipulation</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* Light gray background */
+    color: #333; /* Dark gray text */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  #container {
+    margin-top: 20px;
+  }
+
+  label {
+    margin-right: 10px;
+  }
+
+  .grid-controls {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .grid-controls input[type="number"] {
+    width: 45px;
+    margin-right: 5px;
+  }
+
+  .grid-controls button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .vegetable-selection {
+    margin-top: 20px;
+    margin-bottom: 40px; /* Increased margin for more space */
+  }
+
+  .vegetable-selection label {
+    margin-right: 10px;
+  }
+
+  .grid {
+    display: grid;
+    gap: 5px;
+    margin-bottom: 20px; /* Add margin-bottom for space between dropdowns and grid */
+  }
+
+  .grid select {
+    width: 120px; /* Adjusted width for the select dropdowns */
+  }
+
+  .block {
+    background-color: #D2B48C; /* Tan color */
+    border: 1px solid #8B4513; /* SaddleBrown border */
+    text-align: center;
+    line-height: 50px;
+    font-size: 12px; /* Adjust font size to fit inside grid boxes */
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <div class="grid-controls">
+    <label for="height">Height:</label>
+    <input type="number" id="height" value="5">
+    <label for="width">Width:</label>
+    <input type="number" id="width" value="5">
+    <button onclick="createGrid()">Create Grid</button>
+    <button onclick="resetGrid()">Reset Grid</button>
+    <button onclick="saveGrid()">Save</button> <!-- New Save Button -->
+  </div>
+  <div class="vegetable-selection">
+    <label for=""></label>
+    <input type="checkbox" id="" name="" value="">
+    <label for=""></label>
+    <input type="checkbox" id="" name="" value="">
+    <label for=""></label>
+    <input type="checkbox" id="" name="" value="">
+    <label for="">Spinach</label>
+    <input type="checkbox" id="" name="" value="">
+  </div>
+
+  <div id="selected-plants-container"></div>
+
+  <div class="grid">
+    <label for="plant1">Plant Option:</label>
+    <select id="plant1" onchange="updateOption2Dropdown(this.value)">
+      <option value="">Select Option:</option>
+    </select>
+    <label for="plant2">Companion Option</label>
+    <select id="plant2">
+      <option value="">Select Option</option>
+    </select>
+  </div>
+  <div class="grid" id="gridContainer">
+  </div>
+</div>
+
+<script>
+  let container = document.getElementById("gridContainer");
+  let grid = [];
+  let selectedPlant = null;
+
+  // Define companion plants for each vegetable
+  const companions = {
+    "": ["One", "Two", ""],
+    "": ["Three", "Four"],
+    "": ["Five", "Six"],
+    "": ["Seven", "Eight"]
+  };
+
+  // Function to populate the plant options dropdown
+  function populatePlantOptionsDropdown(categories, dropdown) {
+    dropdown.innerHTML = '<option value="">Select Option</option>';
+
+    categories.forEach(category => {
+      const option = document.createElement("option");
+      option.value = category;
+      option.text = category;
+      dropdown.add(option);
+    });
+  }
+
+  function createGrid() {
+    let height = parseInt(document.getElementById("height").value);
+    let width = parseInt(document.getElementById("width").value);
+
+    container.innerHTML = ""; // Clear existing grid
+
+    container.style.gridTemplateColumns = `repeat(${width}, 50px)`;
+    container.style.gridTemplateRows = `repeat(${height}, 50px)`;
+
+    grid = []; // Clear existing grid data
+    for (let i = 0; i < height; i++) {
+      grid[i] = [];
+      for (let j = 0; j < width; j++) {
+        grid[i][j] = null;
+      }
+    }
+
+    for (let i = 0; i < height * width; i++) {
+      let block = document.createElement("div");
+      block.classList.add("block");
+
+      // Check if there is a selected plant for this block
+      if (selectedPlant !== null) {
+        block.textContent = selectedPlant;
+        let rowIndex = Math.floor(i / width);
+        let colIndex = i % width;
+        grid[rowIndex][colIndex] = selectedPlant;
+      } else {
+        block.textContent = i + 1;
+      }
+
+      block.addEventListener("click", function() {
+        if (selectedPlant !== null) {
+          this.textContent = selectedPlant;
+          let rowIndex = Math.floor(i / width);
+          let colIndex = i % width;
+          grid[rowIndex][colIndex] = selectedPlant;
+        }
+      });
+      container.appendChild(block);
+    }
+  }
+
+  function resetGrid() {
+    container.innerHTML = "";
+    document.getElementById("height").value = 5;
+    document.getElementById("width").value = 5;
+    grid = [];
+  }
+
+  document.querySelectorAll('input[name="vegetables"]').forEach((elem) => {
+    elem.addEventListener("change", function() {
+      updateDropdowns();
+    });
+  });
+
+  function updateDropdowns() {
+    let plant1Dropdown = document.getElementById("plant1");
+    plant1Dropdown.innerHTML = '<option value="">Select Option</option>';
+    document.querySelectorAll('input[name="vegetables"]:checked').forEach((checked) => {
+      let value = checked.value;
+      plant1Dropdown.innerHTML += `<option value="${value}">${value}</option>`;
+    });
+  }
+
+  function updateOption2Dropdown(selectedOption) {
+    let plant2Dropdown = document.getElementById("plant2");
+    plant2Dropdown.innerHTML = '<option value="">Select Option</option>';
+    companions[selectedOption].forEach((companion) => {
+      plant2Dropdown.innerHTML += `<option value="${companion}">${companion}</option>`;
+    });
+    selectedPlant = selectedOption;
+    // Trigger change event to update the second page dropdown
+    plant2Dropdown.dispatchEvent(new Event('change'));
+  }
+
+  document.querySelectorAll('select').forEach((elem) => {
+    elem.addEventListener("change", function() {
+      selectedPlant = this.value;
+    });
+  });
+
+  // Function to save the grid with selected vegetables
+  function saveGrid() {
+    // Assuming you want to save the grid data and selected vegetables in localStorage
+    localStorage.setItem('gridData', JSON.stringify(grid));
+    let selectedVegetables = [];
+    document.querySelectorAll('input[name="vegetables"]:checked').forEach((checked) => {
+      selectedVegetables.push(checked.value);
+    });
+    localStorage.setItem('selectedVegetables', JSON.stringify(selectedVegetables));
+    alert('Grid saved successfully!');
+  }
+
+  // Create initial grid on page load
+  createGrid();
+
+  function retrieveSelectedPlants() {
+    // Retrieve selected plants from localStorage
+    const selectedPlants = JSON.parse(localStorage.getItem('selectedPlants'));
+
+    // Populate selected plants in the checkboxes
+    selectedPlants.forEach((plant) => {
+      document.getElementById(plant.toLowerCase()).checked = true;
+    });
+
+    // Update dropdowns based on selected plants
+    updateDropdowns();
+  }
+  
+  // Call retrieveSelectedPlants function when the page loads
+  window.onload = retrieveSelectedPlants;
+
+  // Frontend
+  function submitSecondPageSelection() {
+  const selectedPlants = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+    .map(checkbox => checkbox.value);
+
+  fetch('http://localhost:3000/api/selections', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ plants: selectedPlants })
+  })
+  .then(response => {
+    if (response.ok) {
+      alert('Selection saved successfully!');
+      window.location.href = 'second_page.html'; // Navigate to the second page
+    } else {
+      alert('Failed to save selection');
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Failed to save selection');
+  });
+}
+
+
+</script>
+</body>
+</html>

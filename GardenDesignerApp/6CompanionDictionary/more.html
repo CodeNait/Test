@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check Mark Boxes</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    .checkbox-container {
+        margin-bottom: 10px;
+    }
+    #selected-options {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+    <div class="checkbox-container">
+        <input type="checkbox" id="option1" class="option-checkbox" data-text="Carrot">
+        <label for="option1">Option 1</label><br>
+        <input type="checkbox" id="option2" class="option-checkbox" data-text="Companion">
+        <label for="option2">Option 2</label><br>
+        <input type="checkbox" id="option3" class="option-checkbox" data-text="Basil">
+        <label for="option3">Option 3</label><br>
+        <input type="checkbox" id="option4" class="option-checkbox" data-text="Enemy">
+        <label for="option4">Option 4</label><br>
+        <input type="checkbox" id="option5" class="option-checkbox" data-text="Beans">
+        <label for="option5">Option 5</label><br>
+        <!-- Add more checkboxes and corresponding labels as needed -->
+    </div>
+
+    <div id="selected-options">
+        <h3>Selected Options:</h3>
+        <ul id="selected-list"></ul>
+    </div>
+
+    <script>
+        const checkboxes = document.querySelectorAll('.option-checkbox');
+        const selectedList = document.getElementById('selected-list');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    const text = this.dataset.text;
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${this.nextElementSibling.textContent}: ${text}`;
+                    selectedList.appendChild(listItem);
+
+                    // Add companion and enemy options dynamically
+                    if (this.id === 'option1') {
+                        addOption('Companion');
+                        addOption('Enemy');
+                    } else if (this.id === 'option2') {
+                        addOption('Companion');
+                        addOption('Enemy');
+                    } else if (this.id === 'option3') {
+                        addOption('Carrot');
+                        addOption('Beans');
+                    } else if (this.id === 'option4') {
+                        addOption('Carrot');
+                        addOption('Beans');
+                    } else if (this.id === 'option5') {
+                        addOption('Carrot');
+                        addOption('Beans');
+                    }
+                } else {
+                    const items = selectedList.getElementsByTagName('li');
+                    for (let i = 0; i < items.length; i++) {
+                        if (items[i].textContent.startsWith(`${this.nextElementSibling.textContent}:`)) {
+                            items[i].remove();
+                        }
+                    }
+                }
+            });
+        });
+
+        // Function to add option to the selected list
+        function addOption(option) {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${option}: ${option}`;
+            selectedList.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>

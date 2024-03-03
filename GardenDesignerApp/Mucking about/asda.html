@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hidden Information Cubes</title>
+<style>
+.container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  max-width: 600px;
+  margin: 50px auto;
+  position: relative;
+}
+
+.cube {
+  width: 100%;
+  height: 100px;
+  background-color: #2ecc71;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.cube.basil {
+  background-color: #006400; /* Darker green */
+}
+
+.cube.pepper {
+  background-color: #ff6961; /* Lighter red */
+}
+
+.cube.corn {
+  background-color: #ffd700; /* Yellow */
+}
+
+.cube.squash {
+  background-color: #f5f5dc; /* Beige */
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 16px;
+}
+
+.dropdown-content p {
+  color: black;
+}
+
+.active .dropdown {
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="cube" onclick="toggleInfo(this)">
+    <span id="selectedOption">Click me</span>
+    <div class="dropdown">
+      <div class="dropdown-content">
+        <p onclick="selectOption('Basil', this)">Basil</p>
+        <p onclick="selectOption('Pepper', this)">Pepper</p>
+        <p onclick="selectOption('Corn', this)">Corn</p>
+        <p onclick="selectOption('Squash', this)">Squash</p>
+      </div>
+
+      <div class="cube" onclick="toggleInfo(this)">
+        <span id="selectedOption">Click me</span>
+        <div class="dropdown">
+          <div class="dropdown-content">
+            <p onclick="selectOption('Basil', this)">Basil</p>
+            <p onclick="selectOption('Pepper', this)">Pepper</p>
+            <p onclick="selectOption('Corn', this)">Corn</p>
+            <p onclick="selectOption('Squash', this)">Squash</p>
+          </div>
+
+          
+    </div>
+  </div>
+  
+  <!-- Repeat the cube div 15 more times to create a 4x4 grid -->
+</div>
+
+<script>
+function toggleInfo(cube) {
+  cube.classList.toggle("active");
+  var selectedOption = document.getElementById("selectedOption").textContent;
+  if (selectedOption === "Basil") {
+    cube.classList.add("basil");
+    cube.classList.remove("pepper", "corn", "squash");
+  } else if (selectedOption === "Pepper") {
+    cube.classList.add("pepper");
+    cube.classList.remove("basil", "corn", "squash");
+  } else if (selectedOption === "Corn") {
+    cube.classList.add("corn");
+    cube.classList.remove("basil", "pepper", "squash");
+  } else if (selectedOption === "Squash") {
+    cube.classList.add("squash");
+    cube.classList.remove("basil", "pepper", "corn");
+  }
+}
+
+function selectOption(option, element) {
+  var cube = element.parentNode.parentNode;
+  document.getElementById("selectedOption").textContent = option;
+  cube.classList.remove("basil", "pepper", "corn", "squash");
+  if (option === "Basil") {
+    cube.classList.add("basil");
+  } else if (option === "Pepper") {
+    cube.classList.add("pepper");
+  } else if (option === "Corn") {
+    cube.classList.add("corn");
+  } else if (option === "Squash") {
+    cube.classList.add("squash");
+  }
+}
+</script>
+
+</body>
+</html>
